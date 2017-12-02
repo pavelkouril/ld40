@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
@@ -18,13 +19,19 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject _map;
 
+    [SerializeField]
+    private Text _daytimeText;
+
     private Camera _camera;
+
+    private Daytime _daytimeManager;
 
     private Vector3 oldCameraPos;
     private Quaternion oldCameraRot;
 
     private void Awake()
     {
+        _daytimeManager = GetComponent<Daytime>();
         _camera = Camera.main;
         StoreCamera();
     }
@@ -43,7 +50,7 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-
+        _daytimeText.text = string.Format("Time: {0}\nDay:{1}\nMonth:{2}", _daytimeManager.TimeOfDayUtc, _daytimeManager.DayOfMonth, _daytimeManager.Month);
     }
 
     public void ToggleMode()

@@ -28,6 +28,7 @@ public class Daytime : MonoBehaviour
 
     private void Start()
     {
+        TimeOfDayUtc = 0.5f;
         DayOfMonth = 1;
         Month = 5;
         DebugDate();
