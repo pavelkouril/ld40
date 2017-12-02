@@ -154,7 +154,7 @@ Material:
     - _TessPhongStrength: 0.5
     - _TessValue: 30
     - _UVSec: 0
-    - _Unpack: 0.012
+    - _Unpack: 1
     - _WaterDepth: 0
     - _WaterFalloff: 0
     - _WaterSmoothness: 0
