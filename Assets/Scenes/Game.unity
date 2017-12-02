@@ -397,7 +397,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2c09232cf63c44ab148e5b86b3c8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _airportDefinitions: []
+  _airportDefinitions:
+  - _location:
+      _latitude: 62.464108
+      _longtitude: -125.06836
+    _name: Canada
+  - _location:
+      _latitude: 40.50127
+      _longtitude: -122.60742
+    _name: West Coast
+  - _location:
+      _latitude: 42.449806
+      _longtitude: -72.02637
+    _name: East Coast
+  - _location:
+      _latitude: 26.541851
+      _longtitude: -80.90332
+    _name: Florida
+  - _location:
+      _latitude: 13.360227
+      _longtitude: -86.44043
+    _name: Central America
+  - _location:
+      _latitude: 1.529664
+      _longtitude: -67.631836
+    _name: Colombia
+  - _location:
+      _latitude: -37.481396
+      _longtitude: -63.588867
+    _name: Argentina
+  - _location:
+      _latitude: 55.269142
+      _longtitude: -2.58728
+    _name: Great Britain
+  - _location:
+      _latitude: 49.19506
+      _longtitude: 16.606836
+    _name: Central Europe
+  - _location:
+      _latitude: 50.71842
+      _longtitude: 6.168823
+    _name: Western Europe
+  - _location:
+      _latitude: 64.80601
+      _longtitude: 48.59253
+    _name: Mother Russia
+  - _location:
+      _latitude: 40.720722
+      _longtitude: 22.994385
+    _name: Southern Europe
+  - _location:
+      _latitude: 34.17659
+      _longtitude: -5.646973
+    _name: Northern Africa
+  - _location:
+      _latitude: 20.254467
+      _longtitude: 23.950195
+    _name: Central Africa
+  - _location:
+      _latitude: -30.038189
+      _longtitude: 25.532227
+    _name: South Africa
+  - _location:
+      _latitude: 31.978376
+      _longtitude: 35.18921
+    _name: Israel
+  - _location:
+      _latitude: 30.501934
+      _longtitude: 59.39209
+    _name: Middle East
+  - _location:
+      _latitude: 30.577633
+      _longtitude: 114.06006
+    _name: China
+  - _location:
+      _latitude: 38.768005
+      _longtitude: 140.77881
+    _name: Japan
+  - _location:
+      _latitude: -24.87024
+      _longtitude: 133.43994
+    _name: Australia
+  - _location:
+      _latitude: -42.63699
+      _longtitude: 172.2876
+    _name: New Zealand
 --- !u!1 &1401598344
 GameObject:
   m_ObjectHideFlags: 0
