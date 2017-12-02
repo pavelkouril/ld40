@@ -13,6 +13,7 @@ public struct AirportDefinition
             return _location;
         }
     }
+
     public string Name
     {
         get

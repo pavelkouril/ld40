@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Airport : MonoBehaviour
+public class Airport
 {
-    public GeoPoint Location { get; set; }
+    public GeoPoint Location { get; private set; }
+    public string Name { get; private set; }
 
-    private void Start()
+    public Airport(AirportDefinition def)
     {
-
-    }
-
-    private void Update()
-    {
-
+        Location = def.Location;
+        Name = def.Name;
     }
 }

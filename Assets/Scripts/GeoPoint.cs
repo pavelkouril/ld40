@@ -44,7 +44,7 @@ public struct GeoPoint : IEquatable<GeoPoint>
     private float _latitude;
     [SerializeField]
     private float _longtitude;
-    
+
     public GeoPoint(float latitude, float longitude) : this()
     {
         _latitude = latitude;
@@ -92,5 +92,10 @@ public struct GeoPoint : IEquatable<GeoPoint>
     public bool Equals(GeoPoint other)
     {
         return Mathf.Approximately(other.Latitude, Latitude) && Mathf.Approximately(other.Longitude, Longitude);
+    }
+
+    override public string ToString()
+    {
+        return string.Format("Lat: {0}, Lon: {1}", _latitude, _longtitude);
     }
 }
