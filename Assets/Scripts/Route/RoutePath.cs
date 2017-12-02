@@ -36,25 +36,25 @@ public class RoutePath : MonoBehaviour
     {
         mDistance = GeoPoint.Distance(mFrom, mTo);
 
-        Quaternion q0 = Quaternion.FromToRotation(GeoPoint.ToCartesian(mFrom), GeoPoint.ToCartesian(mFrom));
-        Quaternion q1 = Quaternion.FromToRotation(GeoPoint.ToCartesian(mFrom), GeoPoint.ToCartesian(mTo));
+        Quaternion q0 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mFrom.ToSphericalCartesian());
+        Quaternion q1 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
 
         Gizmos.color = new Color(1.0f, 0.0f, 0.0f);
-        DrawLine(GeoPoint.ToCartesian(mFrom) - new Vector3(scale, 0.0f, 0.0f), GeoPoint.ToCartesian(mFrom) + new Vector3(scale, 0.0f, 0.0f));
-        DrawLine(GeoPoint.ToCartesian(mFrom) - new Vector3(0.0f, scale, 0.0f), GeoPoint.ToCartesian(mFrom) + new Vector3(0.0f, scale, 0.0f));
-        DrawLine(GeoPoint.ToCartesian(mFrom) - new Vector3(0.0f, 0.0f, scale), GeoPoint.ToCartesian(mFrom) + new Vector3(0.0f, 0.0f, scale));
+        DrawLine(mFrom.ToSphericalCartesian() - new Vector3(scale, 0.0f, 0.0f), mFrom.ToSphericalCartesian() + new Vector3(scale, 0.0f, 0.0f));
+        DrawLine(mFrom.ToSphericalCartesian() - new Vector3(0.0f, scale, 0.0f), mFrom.ToSphericalCartesian() + new Vector3(0.0f, scale, 0.0f));
+        DrawLine(mFrom.ToSphericalCartesian() - new Vector3(0.0f, 0.0f, scale), mFrom.ToSphericalCartesian() + new Vector3(0.0f, 0.0f, scale));
 
         float tStep = 1.0f / 100.0f;
         for (int i = 0; i < 100; i++)
         {
             Quaternion qPrev = Quaternion.Slerp(q0, q1, i * tStep);
             Quaternion qNext = Quaternion.Slerp(q0, q1, (i + 1) * tStep);
-            Vector3 v0 = qPrev * GeoPoint.ToCartesian(mFrom);
-            Vector3 v1 = qNext * GeoPoint.ToCartesian(mFrom);
+            Vector3 v0 = qPrev * mFrom.ToSphericalCartesian();
+            Vector3 v1 = qNext * mFrom.ToSphericalCartesian();
             DrawLine(v0, v1);
         }
 
-        Vector3 v = Quaternion.Slerp(q0, q1, pathProgress / mDistance) * GeoPoint.ToCartesian(mFrom);
+        Vector3 v = Quaternion.Slerp(q0, q1, pathProgress / mDistance) * mFrom.ToSphericalCartesian();
 
         Gizmos.color = new Color(0.0f, 1.0f, 0.0f);
         DrawLine(v - new Vector3(scale, 0.0f, 0.0f), v + new Vector3(scale, 0.0f, 0.0f));
@@ -62,8 +62,12 @@ public class RoutePath : MonoBehaviour
         DrawLine(v - new Vector3(0.0f, 0.0f, scale), v + new Vector3(0.0f, 0.0f, scale));
 
         Gizmos.color = new Color(1.0f, 0.0f, 0.0f);
-        DrawLine(GeoPoint.ToCartesian(mTo) - new Vector3(scale, 0.0f, 0.0f), GeoPoint.ToCartesian(mTo) + new Vector3(scale, 0.0f, 0.0f));
-        DrawLine(GeoPoint.ToCartesian(mTo) - new Vector3(0.0f, scale, 0.0f), GeoPoint.ToCartesian(mTo) + new Vector3(0.0f, scale, 0.0f));
-        DrawLine(GeoPoint.ToCartesian(mTo) - new Vector3(0.0f, 0.0f, scale), GeoPoint.ToCartesian(mTo) + new Vector3(0.0f, 0.0f, scale));
+<<<<<<< HEAD
+        DrawLine(mTo.ToSphericalCartesian() - new Vector3(scale, 0.0f, 0.0f), mTo.ToSphericalCartesian() + new Vector3(scale, 0.0f, 0.0f));
+        DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, scale, 0.0f), mTo.ToSphericalCartesian() + new Vector3(0.0f, scale, 0.0f));
+        DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, 0.0f, scale), mTo.ToSphericalCartesian() + new Vector3(0.0f, 0.0f, scale));
+=======
+        Gizmos.DrawLine(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
+>>>>>>> 963923254dc5a7b82749f0cff930ee773084d492
     }
 }
