@@ -89,6 +89,13 @@ public struct GeoPoint : IEquatable<GeoPoint>
         return Mathf.Atan2(y, x);
     }
 
+    public static Vector3 ToCartesian(GeoPoint g)
+    {
+        return new Vector3(Mathf.Cos(g.LatitudeRad) * Mathf.Cos(g.LongitudeRad),
+            Mathf.Sin(g.LatitudeRad),
+            Mathf.Cos(g.LatitudeRad) * Mathf.Sin(g.LongitudeRad));
+    }
+
     public bool Equals(GeoPoint other)
     {
         return Mathf.Approximately(other.Latitude, Latitude) && Mathf.Approximately(other.Longitude, Longitude);
