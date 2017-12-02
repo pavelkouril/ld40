@@ -24,6 +24,6 @@ public class RoutePath : MonoBehaviour
         mDistance = GeoPoint.Distance(mFrom, mTo);
         
         Gizmos.color = new Color(1.0f, 0.0f, 0.0f);
-        Gizmos.DrawLine(GeoPoint.ToCartesian(mFrom), GeoPoint.ToCartesian(mTo));
+        Gizmos.DrawLine(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
     }
 }

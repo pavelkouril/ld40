@@ -89,11 +89,25 @@ public struct GeoPoint : IEquatable<GeoPoint>
         return Mathf.Atan2(y, x);
     }
 
-    public static Vector3 ToCartesian(GeoPoint g)
+    public static Vector3 ToSphericalCartesian(GeoPoint g)
     {
         return new Vector3(Mathf.Cos(g.LatitudeRad) * Mathf.Cos(g.LongitudeRad),
-            Mathf.Sin(g.LatitudeRad),
-            Mathf.Cos(g.LatitudeRad) * Mathf.Sin(g.LongitudeRad));
+            Mathf.Cos(g.LatitudeRad) * Mathf.Sin(g.LongitudeRad),
+            Mathf.Sin(g.LatitudeRad)
+            );
+    }
+
+    public Vector3 ToSphericalCartesian()
+    {
+        return new Vector3(Mathf.Cos(LatitudeRad) * Mathf.Cos(LongitudeRad),
+            Mathf.Sin(LatitudeRad),
+            Mathf.Cos(LatitudeRad) * Mathf.Sin(LongitudeRad)
+            );
+    }
+
+    public Vector2 ToPlanarCartesian()
+    {
+        return new Vector2((Longitude + 180f) / 360f, (Latitude + 90f) / 180f);
     }
 
     public bool Equals(GeoPoint other)
