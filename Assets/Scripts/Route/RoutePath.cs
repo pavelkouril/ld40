@@ -62,12 +62,8 @@ public class RoutePath : MonoBehaviour
         DrawLine(v - new Vector3(0.0f, 0.0f, scale), v + new Vector3(0.0f, 0.0f, scale));
 
         Gizmos.color = new Color(1.0f, 0.0f, 0.0f);
-<<<<<<< HEAD
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(scale, 0.0f, 0.0f), mTo.ToSphericalCartesian() + new Vector3(scale, 0.0f, 0.0f));
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, scale, 0.0f), mTo.ToSphericalCartesian() + new Vector3(0.0f, scale, 0.0f));
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, 0.0f, scale), mTo.ToSphericalCartesian() + new Vector3(0.0f, 0.0f, scale));
-=======
-        Gizmos.DrawLine(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
->>>>>>> 963923254dc5a7b82749f0cff930ee773084d492
     }
 }
