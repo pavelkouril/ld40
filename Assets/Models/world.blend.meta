@@ -19,7 +19,7 @@ ModelImporter:
       name: None__world-height_png
     second: {fileID: 2100000, guid: 428fbaa9a805b15498dab25becff94e6, type: 2}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
