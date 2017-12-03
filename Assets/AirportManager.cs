@@ -25,16 +25,20 @@ public class AirportManager : MonoBehaviour
 
     private void Awake()
     {
+        _resourceManager = GetComponent<ResourceManager>();
         foreach (var def in _airportDefinitions)
         {
-            _airports.Add(def.Location, new Airport(def));
+            var airport = new Airport(def);
+            _airports.Add(def.Location, airport);
 
             var globeVis = Instantiate(_globeVisPrefab, _globeVisParent.position + def.Location.ToSphericalCartesian(), Quaternion.identity, _globeVisParent);
+            globeVis.Airport = airport;
 
             var planarCartesians = def.Location.ToPlanarCartesian();
             var pos = _mapVisParent.position + new Vector3(0.05f, 1 * (planarCartesians.y * 2.0f - 1.0f), 2 * (planarCartesians.x * 2.0f - 1.0f));
 
             var mapVis = Instantiate(_mapVisPrefab, pos, Quaternion.Euler(0, 270, 270), _mapVisParent);
+            mapVis.Airport = airport;
         }
     }
 

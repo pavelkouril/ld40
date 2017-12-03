@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4654033207266072}
   - component: {fileID: 114626046739514700}
-  m_Layer: 0
+  - component: {fileID: 135699669122364624}
+  m_Layer: 9
   m_Name: AirportGlobeVisualisation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +39,7 @@ GameObject:
   - component: {fileID: 33550579151047198}
   - component: {fileID: 65174676297779416}
   - component: {fileID: 23854731697771418}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,4 +140,15 @@ MonoBehaviour:
   _location:
     _latitude: 0
     _longtitude: 0
-  _radius: 1
+--- !u!135 &135699669122364624
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360349448403142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05372584
+  m_Center: {x: 0, y: 0, z: 0}
