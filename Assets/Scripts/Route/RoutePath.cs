@@ -2,32 +2,52 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoutePath : MonoBehaviour
+public class RoutePath
 {
     public GeoPoint mFrom;
     public GeoPoint mTo;
     public float mDistance;
+    public float mSpeed;
     private float scale = 0.05f;
     private float pathProgress = 0.0f;
-    public float mSpeed;
 
-    /*public RoutePath(GeoPoint from, GeoPoint to)
+    public RoutePath(GeoPoint from, GeoPoint to, float speed)
     {
         mFrom = from;
         mTo = to;
         mDistance = GeoPoint.Distance(mFrom, mTo);
-    }*/
+        mSpeed = speed;
+    }
 
-    public void Update()
+    public bool Finished()
+    {
+        return (pathProgress >= mDistance);
+    }
+
+    public Vector3 Update(float deltaTime)
+    {
+        pathProgress += deltaTime * mSpeed;
+        if (pathProgress > mDistance)
+        {
+            pathProgress = mDistance;
+        }
+
+        Quaternion q0 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mFrom.ToSphericalCartesian());
+        Quaternion q1 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
+
+        return Quaternion.Slerp(q0, q1, pathProgress / mDistance) * mFrom.ToSphericalCartesian();
+    }
+
+    /*public void Update()
     {
         pathProgress += Time.deltaTime * mSpeed;
         if (pathProgress > mDistance)
         {
             pathProgress = mDistance;
         }
-    }
+    }*/
 
-    private void DrawLine(Vector3 a, Vector3 b)
+    /*private void DrawLine(Vector3 a, Vector3 b)
     {
         Gizmos.DrawLine(transform.parent.rotation * a, transform.parent.rotation * b);
     }
@@ -66,5 +86,5 @@ public class RoutePath : MonoBehaviour
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(scale, 0.0f, 0.0f), mTo.ToSphericalCartesian() + new Vector3(scale, 0.0f, 0.0f));
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, scale, 0.0f), mTo.ToSphericalCartesian() + new Vector3(0.0f, scale, 0.0f));
         DrawLine(mTo.ToSphericalCartesian() - new Vector3(0.0f, 0.0f, scale), mTo.ToSphericalCartesian() + new Vector3(0.0f, 0.0f, scale));
-    }
+    }*/
 }

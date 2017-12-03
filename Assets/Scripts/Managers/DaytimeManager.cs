@@ -20,6 +20,14 @@ public class DaytimeManager : MonoBehaviour
         }
     }
 
+    public static float DeltaTimeMs
+    {
+        get
+        {
+            return Time.deltaTime * kSecondsInDay / kRealSecondsInDay;
+        }
+    }
+
     public float TimeOfDayUtc { get; set; }
 
     public float DayOfMonth { get; set; }

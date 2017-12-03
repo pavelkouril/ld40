@@ -23,26 +23,39 @@ public class Plane : MonoBehaviour
         }
     }
 
+    public float Speed = 300.0f;
+
     public bool IsDispatched { get; private set; }
 
     private List<Airport> _flightPlan = new List<Airport>();
 
     private Queue<Airport> _airportQueue = new Queue<Airport>();
 
+    private Airport _previousTarget;
     private Airport _currentTarget;
+    private RoutePath _currentRoute;
 
     private bool _awaitingNewPlan;
 
     private void Update()
     {
-        if (IsDispatched)
+        if (IsDispatched && _currentRoute != null)
         {
             // move the airplane, call the arrive at target logic when necessary, etc.
+            Vector3 position = _currentRoute.Update(DaytimeManager.DeltaTimeMs);
+            transform.position = position;
+
+            if (_currentRoute.Finished())
+            {
+                ArriveAtTarget();
+            }
         }
     }
 
-    private void AriveAtTarget()
+    private void ArriveAtTarget()
     {
+        _previousTarget = _currentTarget;
+
         if (_currentTarget == null)
         {
             Debug.Log("Can't arrive at null.");
@@ -59,6 +72,7 @@ public class Plane : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _currentTarget = _airportQueue.Dequeue();
+        _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
     }
 
     public void SetNewPlan(List<Airport> tempFlightPlan)
@@ -93,7 +107,10 @@ public class Plane : MonoBehaviour
         {
             IsDispatched = true;
             FillQueue();
+            _previousTarget = _flightPlan[0];
+            _currentTarget = _airportQueue.Dequeue();
             transform.position = _flightPlan[0].Location.ToSphericalCartesian();
+            _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
             gameObject.SetActive(true);
         }
     }
