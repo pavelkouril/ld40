@@ -214,7 +214,7 @@ public class CameraController : MonoBehaviour
 
         angleY = ClampAngle(ref speedY, angleY, limitYMin, limitYMax);
 
-        orbitRotation = Quaternion.Euler(angleY, angleX, 0.0f);
+        orbitRotation = center.transform.rotation * Quaternion.Euler(angleY, angleX, 0.0f);
 
         distance = ClampZoom(ref speedZoom, distance, zoomMin, zoomMax);
 

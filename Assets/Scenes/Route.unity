@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 206099769}
   - component: {fileID: 206099771}
   - component: {fileID: 206099770}
+  - component: {fileID: 206099772}
   m_Layer: 0
   m_Name: Atmosphere
   m_TagString: Untagged
@@ -425,7 +426,7 @@ Transform:
   m_GameObject: {fileID: 206099768}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children: []
   m_Father: {fileID: 635224079}
   m_RootOrder: 0
@@ -473,6 +474,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 206099768}
   m_Mesh: {fileID: 4300000, guid: 44ecf0c7137021849be5eed5571dae59, type: 3}
+--- !u!114 &206099772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 206099768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0fc31a43f8dc614991e49cdb8676a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1843438583}
+  light: {fileID: 1418224293}
 --- !u!1 &247562833
 GameObject:
   m_ObjectHideFlags: 0

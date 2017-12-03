@@ -151,6 +151,8 @@ mieScaleDepth	: 0.1
                 float2 t0 = iSphere(cam, v, atmoSphere);
                 float2 t1 = iSphere(cam, v, earthSphere);
 
+                return float4(t0.x, t0.y, 0.0f, 1.0f);
+
                 bool bNoPlanetIntersection = t1.x < 0.0 && t1.y < 0.0;
 
                 float farPoint = bNoPlanetIntersection ? t0.y : t1.x;
@@ -215,14 +217,13 @@ mieScaleDepth	: 0.1
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-                // Ray from camera to vertex and its length (passing through atmosphere)
                 float3 v3Ray = normalize(i.vertexWorld.xyz - _CameraPosition.xyz);
 
                 float3 sun = normalize(_LightDirection.xyz);
 
                 float4 col = inscatter(_CameraPosition.xyz, v3Ray, sun);
 
-                return float4(col.xyz, 1.0f);
+                return float4(col.xyz, col.w);
 			}
 			ENDCG
 
