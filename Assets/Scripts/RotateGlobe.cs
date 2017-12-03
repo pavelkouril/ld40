@@ -6,6 +6,6 @@ public class RotateGlobe : MonoBehaviour
 {
     private void Update()
     {
-        transform.Rotate(new Vector3(0, 360, 0) * Daytime.DeltaTime);
+        transform.Rotate(new Vector3(0, 360, 0) * DaytimeManager.DeltaTime);
     }
 }

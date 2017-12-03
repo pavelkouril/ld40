@@ -33,7 +33,7 @@ public class UiManager : MonoBehaviour
 
     private Camera _camera;
 
-    private Daytime _daytimeManager;
+    private DaytimeManager _daytimeManager;
     private AirportManager _airportManager;
 
     private Vector3 oldCameraPos;
@@ -43,7 +43,7 @@ public class UiManager : MonoBehaviour
 
     private void Awake()
     {
-        _daytimeManager = GetComponent<Daytime>();
+        _daytimeManager = GetComponent<DaytimeManager>();
         _airportManager = GetComponent<AirportManager>();
         _camera = Camera.main;
         StoreCamera();

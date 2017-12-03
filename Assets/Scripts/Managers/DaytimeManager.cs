@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Daytime : MonoBehaviour
+public class DaytimeManager : MonoBehaviour
 {
     public const int kSecondsInDay = 60 * 60 * 24;
 
