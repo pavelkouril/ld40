@@ -37,6 +37,7 @@ mieScaleDepth	: 0.1
 	{
 		Tags { "RenderType"="Transparent" }
 		LOD 100
+        Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass
 		{
@@ -141,8 +142,10 @@ mieScaleDepth	: 0.1
                 float3 M_4PIbetaR = 4.0f * 3.1415926535f * float3(5.8e-4, 1.35e-3, 3.31e-3);
                 float3 M_4PIbetaM = 4.0f * 3.1415926535f * float3(4.0e-3, 4.0e-3, 4.0e-3);
 
-                float heightScaleRayleight = 6.0;
-                float heightScaleMie = 1.2;
+                float heightScaleRayleight = 0.06;
+                float heightScaleMie = 0.024;
+                //float heightScaleRayleight = 6.0;
+                //float heightScaleMie = 1.2;
                 float g = -0.76;
 
                 float4 atmoSphere = float4(_EarthCenter.xyz, _AtmoRadius);
@@ -223,7 +226,12 @@ mieScaleDepth	: 0.1
 
                 float4 col = inscatter(_CameraPosition.xyz, v3Ray, sun);
 
-                return float4(col.xyz, col.w);
+                /*if (col.w == 0.0)
+                {
+                    col.w = 1.0;
+                }*/
+
+                return float4(col.xyz, 1.0 - col.w);
 			}
 			ENDCG
 

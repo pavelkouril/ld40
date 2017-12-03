@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 18e4d7ba61061e046b927247b0e06072, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18230282, g: 0.2248713, b: 0.2891175, a: 1}
+  m_IndirectSpecularColor: {r: 0.010408884, g: 0.008210177, b: 0.007744625, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -224,6 +224,18 @@ MonoBehaviour:
   _globe: {fileID: 635224078}
   _map: {fileID: 1679678605}
   _daytimeText: {fileID: 91168333}
+  _uiBgColor: {r: 0, g: 0, b: 0, a: 0}
+  _targetAlpha: 0
+  _textPanel: {fileID: 0}
+  _textPanelContent: {fileID: 0}
+  _airportPanel: {fileID: 0}
+  _airportPanelName: {fileID: 0}
+  _planeList: {fileID: 0}
+  _planeListItemPrefab: {fileID: 0}
+  _flightPlanPanel: {fileID: 0}
+  _flightPlanPanelName: {fileID: 0}
+  _flightPlanItemPrefab: {fileID: 0}
+  _flightStopsList: {fileID: 0}
 --- !u!114 &122147547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,86 +263,107 @@ MonoBehaviour:
       _latitude: 62.464108
       _longtitude: -125.06836
     _name: Canada
+    _unlockedByDefault: 0
   - _location:
       _latitude: 40.50127
       _longtitude: -122.60742
     _name: West Coast
+    _unlockedByDefault: 0
   - _location:
       _latitude: 42.449806
       _longtitude: -72.02637
     _name: East Coast
+    _unlockedByDefault: 0
   - _location:
       _latitude: 26.541851
       _longtitude: -80.90332
     _name: Florida
+    _unlockedByDefault: 0
   - _location:
       _latitude: 13.360227
       _longtitude: -86.44043
     _name: Central America
+    _unlockedByDefault: 0
   - _location:
       _latitude: 1.529664
       _longtitude: -67.631836
     _name: Colombia
+    _unlockedByDefault: 0
   - _location:
       _latitude: -37.481396
       _longtitude: -63.588867
     _name: Argentina
+    _unlockedByDefault: 0
   - _location:
       _latitude: 55.269142
       _longtitude: -2.58728
     _name: Great Britain
+    _unlockedByDefault: 0
   - _location:
       _latitude: 49.19506
       _longtitude: 16.606836
     _name: Central Europe
+    _unlockedByDefault: 0
   - _location:
       _latitude: 50.71842
       _longtitude: 6.168823
     _name: Western Europe
+    _unlockedByDefault: 0
   - _location:
       _latitude: 64.80601
       _longtitude: 48.59253
     _name: Mother Russia
+    _unlockedByDefault: 0
   - _location:
       _latitude: 40.720722
       _longtitude: 22.994385
     _name: Southern Europe
+    _unlockedByDefault: 0
   - _location:
       _latitude: 34.17659
       _longtitude: -5.646973
     _name: Northern Africa
+    _unlockedByDefault: 0
   - _location:
       _latitude: 20.254467
       _longtitude: 23.950195
     _name: Central Africa
+    _unlockedByDefault: 0
   - _location:
       _latitude: -30.038189
       _longtitude: 25.532227
     _name: South Africa
+    _unlockedByDefault: 0
   - _location:
       _latitude: 31.978376
       _longtitude: 35.18921
     _name: Israel
+    _unlockedByDefault: 0
   - _location:
       _latitude: 30.501934
       _longtitude: 59.39209
     _name: Middle East
+    _unlockedByDefault: 0
   - _location:
       _latitude: 30.577633
       _longtitude: 114.06006
     _name: China
+    _unlockedByDefault: 0
   - _location:
       _latitude: 38.768005
       _longtitude: 140.77881
     _name: Japan
+    _unlockedByDefault: 0
   - _location:
       _latitude: -24.87024
       _longtitude: 133.43994
     _name: Australia
+    _unlockedByDefault: 0
   - _location:
       _latitude: -42.63699
       _longtitude: 172.2876
     _name: New Zealand
+    _unlockedByDefault: 0
   _globeVisPrefab: {fileID: 114626046739514700, guid: 5dc802ef1f2214e46a556f4e45039dbf,
     type: 2}
   _mapVisPrefab: {fileID: 114004977850416982, guid: 4fb2b70781dc29a44a96ddc8b315f9ff,
@@ -1446,7 +1479,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4006678404739282, guid: c472518cdd1af7541a9c5ac8179f6f25, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.0000005
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4006678404739282, guid: c472518cdd1af7541a9c5ac8179f6f25, type: 2}
       propertyPath: m_LocalPosition.y

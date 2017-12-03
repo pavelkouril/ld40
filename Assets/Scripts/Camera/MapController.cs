@@ -18,6 +18,6 @@ public class MapController : MonoBehaviour
 	void Update ()
     {
         material.SetVector("_CameraPosition", camera.transform.position);
-        material.SetVector("_LightDirection", light.transform.forward);
+        material.SetVector("_LightDirection", -light.transform.forward);
     }
 }
