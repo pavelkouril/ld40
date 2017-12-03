@@ -21,6 +21,8 @@ public class AirportManager : MonoBehaviour
 
     private Dictionary<GeoPoint, Airport> _airports = new Dictionary<GeoPoint, Airport>();
 
+    private ResourceManager _resourceManager;
+
     private void Awake()
     {
         foreach (var def in _airportDefinitions)
@@ -34,5 +36,15 @@ public class AirportManager : MonoBehaviour
 
             var mapVis = Instantiate(_mapVisPrefab, pos, Quaternion.Euler(0, 270, 270), _mapVisParent);
         }
+    }
+
+    public bool UnlockAirport(Airport airport)
+    {
+        if (_resourceManager.UseAirport())
+        {
+            airport.Unlock();
+            return true;
+        }
+        return false;
     }
 }

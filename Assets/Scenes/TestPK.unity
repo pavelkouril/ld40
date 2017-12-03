@@ -647,6 +647,7 @@ GameObject:
   - component: {fileID: 980146173}
   - component: {fileID: 980146174}
   - component: {fileID: 980146175}
+  - component: {fileID: 980146176}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -794,6 +795,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339ec76912fd457498b423378dae9416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &980146176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 980146171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539792c6ac6daea4588bba0ceb688bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _remainingAirports: 0
+  _remainingPlanes: 0
+  _remainingUpgrades: 0
 --- !u!4 &989757909 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4006678404739282, guid: c472518cdd1af7541a9c5ac8179f6f25,

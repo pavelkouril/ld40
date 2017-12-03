@@ -26,6 +26,13 @@ public class Daytime : MonoBehaviour
 
     public float Month { get; set; }
 
+    private ResourceManager _resourceManager;
+
+    private void Awake()
+    {
+        _resourceManager = GetComponent<ResourceManager>();
+    }
+
     private void Start()
     {
         TimeOfDayUtc = 0.5f;
@@ -41,6 +48,19 @@ public class Daytime : MonoBehaviour
         {
             TimeOfDayUtc -= 1;
             DayOfMonth++;
+            if (DayOfMonth % 5 == 0)
+            {
+                _resourceManager.AwardAirport();
+            }
+            if (DayOfMonth % 7 == 0)
+            {
+                _resourceManager.AwardPlane();
+            }
+            if (DayOfMonth % 10 == 0)
+            {
+                _resourceManager.AwardUpgrade();
+            }
+
             if (DayOfMonth > kDaysInMonth)
             {
                 DayOfMonth = 1;
