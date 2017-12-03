@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: 4f62136b5ca055b4e98f617a9fb1fb89
-timeCreated: 1512261202
+timeCreated: 1512316068
 licenseType: Free
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
   - _Albedo: {fileID: 2800000, guid: f7fb5d7effcbf554ca2a82d8acdfe6c7, type: 3}
-  - _TextureSample0: {fileID: 2800000, guid: 63c4a42305371484593f8383027d143e, type: 3}
   - _DisplacementTex: {fileID: 2800000, guid: 66b1a53be12fb164d9e6a0f32df0c009, type: 3}
+  - _TextureSample0: {fileID: 2800000, guid: 63c4a42305371484593f8383027d143e, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
