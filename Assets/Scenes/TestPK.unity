@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 633364814}
   - component: {fileID: 633364813}
   - component: {fileID: 633364817}
+  - component: {fileID: 633364818}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -394,6 +395,34 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &633364818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 633364812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b9755a957ec964fa3f7d7d1c4c59a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {fileID: 1274387112}
+  acceleration: 1
+  speed: 1
+  EPS: 0.005
+  limitYMin: -60
+  limitYMax: 60
+  distance: 3
+  speedZoom: 0
+  zoomMin: 2
+  zoomMax: 5
+  planeZoomDrag: 1
+  planeZoomAcceleration: 1
+  planeZoomSpeed: 0
+  planeZoom: 3
+  planeZoomMin: 2
+  planeZoomMax: 5
+  state: 0
 --- !u!1 &789350813
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +910,18 @@ GameObject:
   m_PrefabParentObject: {fileID: 1233518966783072, guid: c472518cdd1af7541a9c5ac8179f6f25,
     type: 2}
   m_PrefabInternal: {fileID: 2077599146}
+--- !u!135 &1274387113
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1274387112}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1341492092
 GameObject:
   m_ObjectHideFlags: 0
