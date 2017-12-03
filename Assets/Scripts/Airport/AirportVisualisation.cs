@@ -37,6 +37,14 @@ public class AirportVisualisation : MonoBehaviour
 
     private void Update()
     {
-        _meshRenderer.material = Airport.IsUnlocked ? _unlockedMaterial : _lockedMaterial;
+        if (Airport.IsUnlocked)
+        {
+            _meshRenderer.material = _unlockedMaterial;
+            _meshRenderer.material.SetFloat("_Float0", Mathf.Clamp01(Airport.PassengerCount));
+        }
+        else
+        {
+            _meshRenderer.material = _lockedMaterial;
+        }
     }
 }

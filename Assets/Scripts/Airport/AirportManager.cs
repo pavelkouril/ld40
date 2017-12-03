@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AirportManager : MonoBehaviour
@@ -16,12 +18,11 @@ public class AirportManager : MonoBehaviour
     [SerializeField]
     private Transform _globeVisParent;
 
-    [SerializeField]
-    private Transform _mapVisParent;
-
     private Dictionary<GeoPoint, Airport> _airports = new Dictionary<GeoPoint, Airport>();
 
     private ResourceManager _resourceManager;
+
+    public Airport startingAirport;
 
     private void Awake()
     {
@@ -30,25 +31,29 @@ public class AirportManager : MonoBehaviour
         {
             var airport = new Airport(def);
             _airports.Add(def.Location, airport);
+            if (def.UnlockedByDefault)
+            {
+                startingAirport = airport;
+            }
 
             var globeVis = Instantiate(_globeVisPrefab, _globeVisParent.position + def.Location.ToSphericalCartesian(), Quaternion.identity, _globeVisParent);
-            globeVis.Airport = airport;
-
-            var planarCartesians = def.Location.ToPlanarCartesian();
-            var pos = _mapVisParent.position + new Vector3(0.05f, 1 * (planarCartesians.y * 2.0f - 1.0f), 2 * (planarCartesians.x * 2.0f - 1.0f));
-
-            var mapVis = Instantiate(_mapVisPrefab, pos, Quaternion.Euler(0, 270, 270), _mapVisParent);
-            mapVis.Airport = airport;
+            globeVis.Airport = airport;            
         }
     }
 
     public bool UnlockAirport(Airport airport)
     {
-        if (_resourceManager.UseAirport())
-        {
-            airport.Unlock();
-            return true;
-        }
-        return false;
+        airport.Unlock();
+        return true;
+    }
+
+    public Airport GetRandomAirportCloseTo(Airport airport)
+    {
+        return _airports.Values.Where(a => !a.IsUnlocked).OrderBy(a => GeoPoint.Distance(a.Location, airport.Location)).Take(5).OrderBy(qu => Guid.NewGuid()).First();
+    }
+
+    public Airport GetRandomAirport()
+    {
+        return _airports.Values.Where(a => !a.IsUnlocked).OrderBy(qu => Guid.NewGuid()).First();
     }
 }

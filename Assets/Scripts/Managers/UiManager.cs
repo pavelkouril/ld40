@@ -62,17 +62,6 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Text _textPanelContent;
 
-    #region AirportPanel
-
-    [Header("Airport panel")]
-    [SerializeField]
-    private GameObject _airportPanel;
-
-    [SerializeField]
-    private Text _airportPanelName;
-
-    #endregion
-
     #region Planes
 
     [Header("Planes")]
@@ -149,12 +138,10 @@ public class UiManager : MonoBehaviour
         // setup all default bg colors
         var transparentDefault = _uiBgColor;
         transparentDefault.a = 0;
-        _airportPanel.GetComponent<Image>().color = transparentDefault;
         _textPanel.GetComponent<Image>().color = transparentDefault;
         _flightPlanPanel.GetComponent<Image>().color = transparentDefault;
 
         // hide all panels
-        _airportPanel.SetActive(false);
         _textPanel.SetActive(false);
         _flightPlanPanel.SetActive(false);
     }
@@ -173,14 +160,7 @@ public class UiManager : MonoBehaviour
                 var airport = hit.collider.GetComponent<AirportVisualisation>().Airport;
                 if (!_lockAirportPanelOpen && !airport.IsUnlocked)
                 {
-                    if (!_airportPanel.activeSelf)
-                    {
-                        ShowAirportPanel(airport);
-                    }
-                    else
-                    {
-                        HideAirportPanel(airport);
-                    }
+                    
                 }
                 else if (_selectAirportForPlan && airport.IsUnlocked)
                 {
@@ -238,37 +218,7 @@ public class UiManager : MonoBehaviour
         _camera.transform.localRotation = oldCameraRot;
     }
 
-    private void ShowAirportPanel(Airport airport)
-    {
-        _lockAirportPanelOpen = true;
-        _currentAirport = airport;
-        _airportPanelName.text = airport.Name;
-        _airportPanel.SetActive(true);
-        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
-        {
-            _lockAirportPanelOpen = false;
-        });
-    }
-
-    public void HideAirportPanel()
-    {
-        HideAirportPanel(null);
-    }
-
-    public void HideAirportPanel(Airport airport)
-    {
-        _lockAirportPanelOpen = true;
-        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
-        {
-            _lockAirportPanelOpen = false;
-            _currentAirport = null;
-            _airportPanel.SetActive(false);
-            if (airport != null)
-            {
-                ShowAirportPanel(airport);
-            }
-        });
-    }
+  
 
     private void ShowTextPanel(string text)
     {
@@ -286,17 +236,6 @@ public class UiManager : MonoBehaviour
         });
     }
 
-    public void UnlockAirport()
-    {
-        if (_airportManager.UnlockAirport(_currentAirport))
-        {
-            Debug.Log("airport obtained. great success!");
-            HideAirportPanel();
-            var plane = _planeManager.AddPlane(true);
-            AddPlaneListItem(plane);
-        }
-    }
-
     public void AddPlaneListItem(Plane plane)
     {
         var listItem = Instantiate(_planeListItemPrefab, _planeList);
@@ -311,7 +250,7 @@ public class UiManager : MonoBehaviour
         SetFlightPanelItems(plane);
         _flightPlanPanelName.text = plane.Name;
         _flightPlanPanel.SetActive(true);
-        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        LeanTween.alpha(_flightPlanPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
             _selectAirportForPlan = true;
         });
@@ -324,7 +263,7 @@ public class UiManager : MonoBehaviour
 
     public void HideFlightPlanPanel(Plane plane)
     {
-        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        LeanTween.alpha(_flightPlanPanel.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
             _selectAirportForPlan = false;
             _lockAirportPanelOpen = false;

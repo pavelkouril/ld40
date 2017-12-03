@@ -9,6 +9,8 @@ public class Airport
 
     public bool IsUnlocked { get; private set; }
 
+    public float PassengerCount { get; internal set; }
+
     public Airport(AirportDefinition def)
     {
         Location = def.Location;
