@@ -151,7 +151,7 @@ mieScaleDepth	: 0.1
                 float2 t0 = iSphere(cam, v, atmoSphere);
                 float2 t1 = iSphere(cam, v, earthSphere);
 
-                return float4(t0.x, t0.y, 0.0f, 1.0f);
+                //return float4(t0.x, t0.y, 0.0f, 1.0f);
 
                 bool bNoPlanetIntersection = t1.x < 0.0 && t1.y < 0.0;
 
