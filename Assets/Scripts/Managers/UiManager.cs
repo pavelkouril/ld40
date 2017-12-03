@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,6 +79,9 @@ public class UiManager : MonoBehaviour
     private Text _flightPlanPanelName;
 
     [SerializeField]
+    private Button _flightPlanSaveButton;
+
+    [SerializeField]
     private FlightPlanItem _flightPlanItemPrefab;
 
     [SerializeField]
@@ -101,6 +105,8 @@ public class UiManager : MonoBehaviour
     private bool _selectAirportForPlan;
 
     private List<Airport> _tempFlightPlan = new List<Airport>();
+
+    private bool _sameStartAndEnd;
 
     private void Awake()
     {
@@ -147,7 +153,7 @@ public class UiManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 9))
             {
                 var airport = hit.collider.GetComponent<AirportVisualisation>().Airport;
-                if (!_lockAirportPanelOpen)
+                if (!_lockAirportPanelOpen && !airport.IsUnlocked)
                 {
                     if (!_airportPanel.activeSelf)
                     {
@@ -158,12 +164,14 @@ public class UiManager : MonoBehaviour
                         HideAirportPanel(airport);
                     }
                 }
-                else if (_selectAirportForPlan)
+                else if (_selectAirportForPlan && airport.IsUnlocked)
                 {
                     AddFlightPlanItem(airport);
                 }
             }
         }
+
+        _flightPlanSaveButton.interactable = !_sameStartAndEnd && _tempFlightPlan.Count >= 2;
     }
 
     public void ToggleMode()
@@ -282,6 +290,7 @@ public class UiManager : MonoBehaviour
     {
         _lockAirportPanelOpen = true;
         _currentPlane = plane;
+        SetFlightPanelItems(plane);
         _flightPlanPanelName.text = plane.Name;
         _flightPlanPanel.SetActive(true);
         LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
@@ -312,8 +321,35 @@ public class UiManager : MonoBehaviour
 
     private void AddFlightPlanItem(Airport airport)
     {
-        var item = Instantiate(_flightPlanItemPrefab, _flightStopsList);
-        item.Airport = airport;
-        _tempFlightPlan.Add(airport);
+        if (airport != _tempFlightPlan.LastOrDefault())
+        {
+            var item = Instantiate(_flightPlanItemPrefab, _flightStopsList);
+            item.Airport = airport;
+            _tempFlightPlan.Add(airport);
+            _sameStartAndEnd = airport == _tempFlightPlan.FirstOrDefault();
+        }
+        else
+        {
+            Debug.Log("Can't have same end points.");
+        }
+    }
+
+    private void SetFlightPanelItems(Plane plane)
+    {
+        _tempFlightPlan.Clear();
+        foreach (var item in _flightStopsList.GetComponentsInChildren<FlightPlanItem>())
+        {
+            Destroy(item.gameObject);
+        }
+        foreach (var stop in plane.FlightPlan)
+        {
+            AddFlightPlanItem(stop);
+        }
+    }
+
+    public void SaveFlightPlan()
+    {
+        _currentPlane.SetNewPlan(_tempFlightPlan);
+        HideFlightPlanPanel();
     }
 }
