@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114613214171209636}
-  - {fileID: 114649368785454594}
+  - {fileID: 114864218584761360}
   - {fileID: 114219979591584850}
 --- !u!114 &114219979591584850
 MonoBehaviour:
@@ -309,7 +309,7 @@ MonoBehaviour:
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
---- !u!114 &114649368785454594
+--- !u!114 &114864218584761360
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_PrefabParentObject: {fileID: 0}
