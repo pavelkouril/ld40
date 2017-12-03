@@ -42,8 +42,10 @@ public class Plane : MonoBehaviour
         if (IsDispatched && _currentRoute != null)
         {
             // move the airplane, call the arrive at target logic when necessary, etc.
-            Vector3 position = _currentRoute.Update(DaytimeManager.DeltaTimeMs);
+            Quaternion q = new Quaternion();
+            Vector3 position = _currentRoute.Update(DaytimeManager.DeltaTimeMs, ref q);
             transform.localPosition = position;
+            transform.localRotation = q;
 
             if (_currentRoute.Finished())
             {

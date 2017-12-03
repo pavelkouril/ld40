@@ -24,7 +24,7 @@ public class RoutePath
         return (pathProgress >= mDistance);
     }
 
-    public Vector3 Update(float deltaTime)
+    public Vector3 Update(float deltaTime, ref Quaternion rotation)
     {
         pathProgress += deltaTime * mSpeed;
         if (pathProgress > mDistance)
@@ -35,7 +35,17 @@ public class RoutePath
         Quaternion q0 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mFrom.ToSphericalCartesian());
         Quaternion q1 = Quaternion.FromToRotation(mFrom.ToSphericalCartesian(), mTo.ToSphericalCartesian());
 
-        return Quaternion.Slerp(q0, q1, pathProgress / mDistance) * mFrom.ToSphericalCartesian();
+        Vector3 v0 = Quaternion.Slerp(q0, q1, pathProgress / mDistance) * mFrom.ToSphericalCartesian();
+        Vector3 v1 = Quaternion.Slerp(q0, q1, (pathProgress + deltaTime * mSpeed) / mDistance) * mFrom.ToSphericalCartesian();
+
+        Vector3 normal = new Vector3(v0.x, v0.y, v0.z);
+        normal.Normalize();
+        Vector3 direction = v1 - v0;
+        direction.Normalize();
+        Vector3 right = Vector3.Cross(direction, normal);
+        rotation = Quaternion.LookRotation(right, normal);
+
+        return v0;
     }
 
     /*public void Update()
