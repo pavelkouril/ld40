@@ -74,6 +74,7 @@ public class Plane : MonoBehaviour
     private IEnumerator WaitForPassengers(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        _currentTarget.BoardPassengers();
         _currentTarget = _airportQueue.Dequeue();
         _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
     }

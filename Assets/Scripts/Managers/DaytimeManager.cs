@@ -35,10 +35,12 @@ public class DaytimeManager : MonoBehaviour
     public float Month { get; set; }
 
     private ResourceManager _resourceManager;
+    private GameloopManager _gameloopManager;
 
     private void Awake()
     {
         _resourceManager = GetComponent<ResourceManager>();
+        _gameloopManager = GetComponent<GameloopManager>();
     }
 
     private void Start()
@@ -56,29 +58,17 @@ public class DaytimeManager : MonoBehaviour
         {
             TimeOfDayUtc -= 1;
             DayOfMonth++;
-            if (DayOfMonth % 5 == 0)
-            {
-                _resourceManager.AwardAirport();
-            }
-            if (DayOfMonth % 7 == 0)
-            {
-                _resourceManager.AwardPlane();
-            }
-            if (DayOfMonth % 10 == 0)
-            {
-                _resourceManager.AwardUpgrade();
-            }
-
+            _gameloopManager.NewDay(DayOfMonth, Month);
             if (DayOfMonth > kDaysInMonth)
             {
                 DayOfMonth = 1;
                 Month++;
+                _gameloopManager.NewMonth(DayOfMonth, Month);
                 if (Month > kMonthsInYear)
                 {
                     Month = 1;
                 }
             }
-            DebugDate();
         }
     }
 

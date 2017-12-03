@@ -9,6 +9,8 @@ public class Airport
 
     public bool IsUnlocked { get; private set; }
 
+    public float PassengerCount { get; internal set; }
+
     public Airport(AirportDefinition def)
     {
         Location = def.Location;
@@ -19,5 +21,15 @@ public class Airport
     public void Unlock()
     {
         IsUnlocked = true;
+    }
+
+    public void BoardPassengers()
+    {
+        PassengerCount *= Random.Range(0.66f, 0.95f);
+    }
+
+    public void SpawnPassengers()
+    {
+        PassengerCount += Random.Range(0.07f, 0.25f);
     }
 }
