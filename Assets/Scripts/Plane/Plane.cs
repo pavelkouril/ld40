@@ -30,7 +30,7 @@ public class Plane : MonoBehaviour
     private List<Airport> _flightPlan = new List<Airport>();
 
     private Queue<Airport> _airportQueue = new Queue<Airport>();
-
+    
     private Airport _previousTarget;
     private Airport _currentTarget;
     private RoutePath _currentRoute;
@@ -55,6 +55,7 @@ public class Plane : MonoBehaviour
     private void ArriveAtTarget()
     {
         _previousTarget = _currentTarget;
+        _currentRoute = null;
 
         if (_currentTarget == null)
         {
@@ -72,7 +73,7 @@ public class Plane : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _currentTarget = _airportQueue.Dequeue();
-        _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
+        _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, 50.0f);
     }
 
     public void SetNewPlan(List<Airport> tempFlightPlan)
@@ -110,7 +111,7 @@ public class Plane : MonoBehaviour
             _previousTarget = _flightPlan[0];
             _currentTarget = _airportQueue.Dequeue();
             transform.position = _flightPlan[0].Location.ToSphericalCartesian();
-            _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
+            _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, 50.0f);
             gameObject.SetActive(true);
         }
     }
