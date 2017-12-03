@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fc8fada19788247b6c87a115127c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lockedMaterial: {fileID: 2100000, guid: 2d31f8e9925042746a9ff0c57308573a, type: 2}
+  _unlockedMaterial: {fileID: 2100000, guid: 61e8a562dc5e2584488f24a63ba4b0a4, type: 2}
   _location:
     _latitude: 0
     _longtitude: 0
