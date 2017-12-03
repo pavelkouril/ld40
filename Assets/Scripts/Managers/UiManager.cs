@@ -350,6 +350,7 @@ public class UiManager : MonoBehaviour
     public void SaveFlightPlan()
     {
         _currentPlane.SetNewPlan(_tempFlightPlan);
+        _currentPlane.Dispatch();
         HideFlightPlanPanel();
     }
 }

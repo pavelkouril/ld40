@@ -23,6 +23,8 @@ public class Plane : MonoBehaviour
         }
     }
 
+    public bool IsDispatched { get; private set; }
+
     private List<Airport> _flightPlan = new List<Airport>();
 
     private Queue<Airport> _airportQueue = new Queue<Airport>();
@@ -30,6 +32,14 @@ public class Plane : MonoBehaviour
     private Airport _currentTarget;
 
     private bool _awaitingNewPlan;
+
+    private void Update()
+    {
+        if (IsDispatched)
+        {
+            // move the airplane, call the arrive at target logic when necessary, etc.
+        }
+    }
 
     private void AriveAtTarget()
     {
@@ -72,5 +82,19 @@ public class Plane : MonoBehaviour
             _airportQueue.Enqueue(_flightPlan[i]);
         }
         _airportQueue.Enqueue(_flightPlan[0]);
+    }
+
+    /// <summary>
+    /// Dispatches the plane on a flight (if not dispatched already)
+    /// </summary>
+    public void Dispatch()
+    {
+        if (!IsDispatched)
+        {
+            IsDispatched = true;
+            FillQueue();
+            transform.position = _flightPlan[0].Location.ToSphericalCartesian();
+            gameObject.SetActive(true);
+        }
     }
 }
