@@ -48,6 +48,8 @@ public class CameraController : MonoBehaviour
 
     private float interpolation = 1.0f;
 
+    public bool lockRotation = false;
+
     public void Start()
     {
         angleX = transform.eulerAngles.y;
@@ -214,8 +216,14 @@ public class CameraController : MonoBehaviour
 
         angleY = ClampAngle(ref speedY, angleY, limitYMin, limitYMax);
 
-        //orbitRotation = center.transform.rotation * Quaternion.Euler(angleY, angleX, 0.0f);
-        orbitRotation = Quaternion.Euler(angleY, angleX, 0.0f);
+        if (lockRotation)
+        {
+            orbitRotation = Quaternion.Euler(angleY, angleX, 0.0f);
+        }
+        else
+        {
+            orbitRotation = center.transform.rotation * Quaternion.Euler(angleY, angleX, 0.0f);
+        }
 
         distance = ClampZoom(ref speedZoom, distance, zoomMin, zoomMax);
 
