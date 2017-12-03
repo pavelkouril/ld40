@@ -36,7 +36,7 @@ MonoBehaviour:
     value: 1
   cameraPos:
     overrideState: 1
-    value: {x: 0, y: 0, z: 0, w: 0}
+    value: {x: 0, y: 0, z: 5, w: 0}
   cameraForward:
     overrideState: 1
     value: {x: 0, y: 0, z: 1, w: 0}
@@ -69,10 +69,13 @@ MonoBehaviour:
     value: {x: 0, y: 0, z: 0, w: 0}
   earthRadius:
     overrideState: 1
-    value: 0.99
+    value: 0.985
   atmoRadius:
     overrideState: 1
-    value: 1.2
+    value: 1.05
+  editor:
+    overrideState: 0
+    value: 1
 --- !u!114 &114219979591584850
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -90,7 +93,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 6.7
+    value: 5
   threshold:
     overrideState: 1
     value: 0.75
@@ -111,10 +114,10 @@ MonoBehaviour:
     value: 0
   dirtTexture:
     overrideState: 1
-    value: {fileID: 2800000, guid: 7a051dbda2d7bc447bee412427cd311e, type: 3}
+    value: {fileID: 2800000, guid: 69e847bbff1cf5449a4ee0bbd045dbc9, type: 3}
   dirtIntensity:
     overrideState: 1
-    value: 2
+    value: 5
 --- !u!114 &114613214171209636
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -383,23 +386,23 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   filtering:
-    overrideState: 0
-    value: {x: 50, y: 95}
+    overrideState: 1
+    value: {x: 22.32941, y: 67.32941}
   minLuminance:
-    overrideState: 0
+    overrideState: 1
     value: 0
   maxLuminance:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 3
   keyValue:
-    overrideState: 0
+    overrideState: 1
     value: 1
   eyeAdaptation:
-    overrideState: 0
+    overrideState: 1
     value: 0
   speedUp:
-    overrideState: 0
+    overrideState: 1
     value: 2
   speedDown:
-    overrideState: 0
+    overrideState: 1
     value: 1
