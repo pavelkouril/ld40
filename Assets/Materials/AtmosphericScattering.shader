@@ -226,10 +226,10 @@ mieScaleDepth	: 0.1
 
                 float4 col = inscatter(_CameraPosition.xyz, v3Ray, sun);
 
-                /*if (col.w == 0.0)
+                if (col.w == 0.0)
                 {
                     col.w = 1.0;
-                }*/
+                }
 
                 return float4(col.xyz, 1.0 - col.w);
 			}

@@ -49,6 +49,8 @@ public class CameraController : MonoBehaviour
     private float interpolation = 1.0f;
 
     public bool lockRotation = false;
+    
+    public GameObject light;
 
     public void Start()
     {
