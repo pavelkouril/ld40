@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CameraState
+{
+    ORBIT,
+    ORBIT_TO_PLANE,
+    PLANE,
+    PLANE_TO_ORBIT
+}
+
 public class CameraController : MonoBehaviour
 {
     public GameObject center;
@@ -21,6 +29,20 @@ public class CameraController : MonoBehaviour
     public float speedZoom = 0.0f;
     public float zoomMin = 1.0f;
     public float zoomMax = 5.0f;
+
+    public bool planeZoomDrag = true;
+    public float planeZoomAcceleration = 1.0f;
+    public float planeZoomSpeed = 0.0f;
+    public float planeZoom = 3.0f;
+    public float planeZoomMin = 2.0f;
+    public float planeZoomMax = 5.0f;
+
+    public CameraState state = CameraState.ORBIT;
+
+    private Vector3 orbitPosition;
+    private Quaternion orbitRotation;
+    private Vector3 planePosition;
+    private Quaternion planeRotation;
 
     public void Start()
     {
@@ -62,6 +84,25 @@ public class CameraController : MonoBehaviour
         }
 
         return Mathf.Clamp(zoom, min, max);
+    }
+
+    private void DragPlane()
+    {
+        if (planeZoomDrag)
+        {
+            if (planeZoomSpeed > EPS)
+            {
+                planeZoomSpeed -= planeZoomAcceleration * Time.deltaTime;
+            }
+            else if (planeZoomSpeed < -EPS)
+            {
+                planeZoomSpeed += planeZoomAcceleration * Time.deltaTime;
+            }
+            else
+            {
+                planeZoomSpeed = 0.0f;
+            }
+        }
     }
 
     private void Drag()
@@ -117,65 +158,108 @@ public class CameraController : MonoBehaviour
 
     public void LateUpdate()
     {
-        dragX = true;
-        dragY = true;
-        dragZoom = true;
-
-        if (Input.GetKey(KeyCode.D))
+        switch (state)
         {
-            speedX -= acceleration * Time.deltaTime;
-            dragX = false;
+            case CameraState.ORBIT:
+                dragX = true;
+                dragY = true;
+                dragZoom = true;
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    speedX -= acceleration * Time.deltaTime;
+                    dragX = false;
+                }
+
+                if (Input.GetKey(KeyCode.A))
+                {
+                    speedX += acceleration * Time.deltaTime;
+                    dragX = false;
+                }
+
+                if (Input.GetKey(KeyCode.S))
+                {
+                    speedY -= acceleration * Time.deltaTime;
+                    dragY = false;
+                }
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    speedY += acceleration * Time.deltaTime;
+                    dragY = false;
+                }
+
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    speedZoom += acceleration * Time.deltaTime;
+                    dragZoom = false;
+                }
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    speedZoom -= acceleration * Time.deltaTime;
+                    dragZoom = false;
+                }
+
+                Drag();
+
+                speedX = Mathf.Clamp(speedX, -speed, speed);
+                speedY = Mathf.Clamp(speedY, -speed, speed);
+                speedZoom = Mathf.Clamp(speedZoom, -speed, speed);
+
+                angleX += speedX;
+                angleY += speedY;
+                distance += speedZoom * Time.deltaTime;
+
+                angleY = ClampAngle(ref speedY, angleY, limitYMin, limitYMax);
+
+                orbitRotation = Quaternion.Euler(angleY, angleX, 0.0f);
+
+                distance = ClampZoom(ref speedZoom, distance, zoomMin, zoomMax);
+
+                orbitPosition = orbitRotation * new Vector3(0.0f, 0.0f, -distance) + center.transform.position;
+
+                transform.rotation = orbitRotation;
+                transform.position = orbitPosition;
+                break;
+
+            case CameraState.ORBIT_TO_PLANE:
+                state = CameraState.PLANE;
+                break;
+
+            case CameraState.PLANE:
+                planeZoomDrag = true;
+
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    planeZoomSpeed += planeZoomAcceleration * Time.deltaTime;
+                    planeZoomDrag = false;
+                }
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    planeZoomSpeed -= planeZoomAcceleration * Time.deltaTime;
+                    planeZoomDrag = false;
+                }
+
+                DragPlane();
+
+                planeZoomSpeed = Mathf.Clamp(planeZoomSpeed, -speed, speed);
+
+                planeZoom += planeZoomSpeed * Time.deltaTime;
+
+                planeZoom = ClampZoom(ref planeZoomSpeed, planeZoom, planeZoomMin, planeZoomMax);
+
+                planeRotation = transform.parent.rotation * Quaternion.Euler(0.0f, -90.0f, 0.0f);
+                planePosition = transform.parent.rotation * Quaternion.Euler(0.0f, 90.0f, 0.0f) * new Vector3(0.0f, 0.0f, planeZoom);
+
+                transform.rotation = planeRotation;
+                transform.position = planePosition;
+                break;
+
+            case CameraState.PLANE_TO_ORBIT:
+                state = CameraState.ORBIT;
+                break;
         }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            speedX += acceleration * Time.deltaTime;
-            dragX = false;
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            speedY -= acceleration * Time.deltaTime;
-            dragY = false;
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            speedY += acceleration * Time.deltaTime;
-            dragY = false;
-        }
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            speedZoom += acceleration * Time.deltaTime;
-            dragZoom = false;
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            speedZoom -= acceleration * Time.deltaTime;
-            dragZoom = false;
-        }
-        
-        Drag();
-
-        speedX = Mathf.Clamp(speedX, -speed, speed);
-        speedY = Mathf.Clamp(speedY, -speed, speed);
-        speedZoom = Mathf.Clamp(speedZoom, -speed, speed);
-
-        angleX += speedX;
-        angleY += speedY;
-        distance += speedZoom * Time.deltaTime;
-
-        angleY = ClampAngle(ref speedY, angleY, limitYMin, limitYMax);
-
-        Quaternion rotation = Quaternion.Euler(angleY, angleX, 0.0f);
-        
-        distance = ClampZoom(ref speedZoom, distance, zoomMin, zoomMax);
-
-        Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + center.transform.position;
-
-        transform.rotation = rotation;
-        transform.position = position;
     }
 }

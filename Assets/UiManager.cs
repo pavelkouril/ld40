@@ -58,12 +58,14 @@ public class UiManager : MonoBehaviour
         if (CurrentMode == DisplayModes.Globe)
         {
             CurrentMode = DisplayModes.Map;
+            _camera.GetComponent<CameraController>().state = CameraState.ORBIT_TO_PLANE;
             ShowMap();
             StoreCamera();
         }
         else
         {
             CurrentMode = DisplayModes.Globe;
+            _camera.GetComponent<CameraController>().state = CameraState.PLANE_TO_ORBIT;
             ShowGlobe();
             RestoreCamera();
         }
