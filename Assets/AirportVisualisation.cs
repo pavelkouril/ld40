@@ -17,11 +17,8 @@ public class AirportVisualisation : MonoBehaviour
         }
     }
 
+    public Airport Airport { get; set; }
+
     [SerializeField]
     private GeoPoint _location;
-
-    private void Update()
-    {
-
-    }
 }
