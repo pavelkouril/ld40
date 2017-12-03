@@ -14,8 +14,5 @@ public class PassengerManager : MonoBehaviour
 
     }
 
-    public void SpawnAtAirport(Airport airport)
-    {
-        airport.PassengerCount += Random.Range(0.07f, 0.25f);
-    }
+    
 }

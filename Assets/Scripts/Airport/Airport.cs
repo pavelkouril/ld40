@@ -22,4 +22,14 @@ public class Airport
     {
         IsUnlocked = true;
     }
+
+    public void BoardPassengers()
+    {
+        PassengerCount *= Random.Range(0.66f, 0.95f);
+    }
+
+    public void SpawnPassengers()
+    {
+        PassengerCount += Random.Range(0.07f, 0.25f);
+    }
 }

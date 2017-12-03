@@ -47,6 +47,17 @@ public class AirportManager : MonoBehaviour
         return true;
     }
 
+    internal void SpawnAtAllUnlockedAiports()
+    {
+        foreach (var a in _airports.Values)
+        {
+            if (a.IsUnlocked)
+            {
+                a.SpawnPassengers();
+            }
+        }
+    }
+
     public Airport GetRandomAirportCloseTo(Airport airport)
     {
         return _airports.Values.Where(a => !a.IsUnlocked).OrderBy(a => GeoPoint.Distance(a.Location, airport.Location)).Take(5).OrderBy(qu => Guid.NewGuid()).First();

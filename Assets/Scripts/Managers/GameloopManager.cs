@@ -10,6 +10,7 @@ public class GameloopManager : MonoBehaviour
     private UiManager _uiManager;
     private DaytimeManager _daytimeManager;
     private PassengerManager _passengerManager;
+    private float airportsSpawnRate;
 
     private void Awake()
     {
@@ -23,23 +24,53 @@ public class GameloopManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(UnlockFirstAirport());
-        StartCoroutine(PopPassenger());
+        StartCoroutine(SpawnFirstPassengers());
     }
 
-    private IEnumerator PopPassenger()
+    private IEnumerator SpawnFirstPassengers()
     {
         yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 5);
-        _passengerManager.SpawnAtAirport(_airportManager.startingAirport);
+        _airportManager.startingAirport.SpawnPassengers();
+        StartCoroutine(SpawnPassengers());
+    }
+
+    private IEnumerator SpawnPassengers()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 4);
+            _airportManager.SpawnAtAllUnlockedAiports();
+        }
     }
 
     private IEnumerator UnlockFirstAirport()
     {
-        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 2);
+        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 3);
         var airport = _airportManager.GetRandomAirportCloseTo(_airportManager.startingAirport);
         if (_airportManager.UnlockAirport(airport))
         {
             var plane = _planeManager.AddPlane(true);
             _uiManager.AddPlaneListItem(plane);
+        }
+
+        StartCoroutine(StartAirportSpawns());
+    }
+
+    private IEnumerator StartAirportSpawns()
+    {
+        airportsSpawnRate = DaytimeManager.kRealSecondsInDay * 5;
+        yield return new WaitForSeconds(airportsSpawnRate);
+        airportsSpawnRate *= 0.92f;
+        Airport airport;
+        while ((airport = _airportManager.GetRandomAirport()) != null)
+        {
+            if (_airportManager.UnlockAirport(airport))
+            {
+                var plane = _planeManager.AddPlane(true);
+                _uiManager.AddPlaneListItem(plane);
+            }
+            airportsSpawnRate *= 0.92f;
+            yield return new WaitForSeconds(airportsSpawnRate);
         }
     }
 
