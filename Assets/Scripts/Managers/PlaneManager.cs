@@ -14,6 +14,9 @@ public class PlaneManager : MonoBehaviour
     }
 
     [SerializeField]
+    private Transform _globe;
+
+    [SerializeField]
     private Plane _planePrefab;
 
     [SerializeField]
@@ -47,7 +50,7 @@ public class PlaneManager : MonoBehaviour
     {
         if (gratis || _resourceManager.UsePlane())
         {
-            var plane = Instantiate(_planePrefab);
+            var plane = Instantiate(_planePrefab, _globe);
             plane.Name = RandomName();
             plane.gameObject.SetActive(false);
             _planes.Add(plane);

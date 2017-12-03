@@ -4431,6 +4431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dc953a1aa4df1d48a3a6e669ff5b232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _globe: {fileID: 989757909}
   _planePrefab: {fileID: 114724486153700478, guid: fb08d0c84f9b626499c3d3a587111bd1,
     type: 2}
   _names:
@@ -7857,7 +7858,7 @@ Prefab:
     - target: {fileID: 114645445827493532, guid: c472518cdd1af7541a9c5ac8179f6f25,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c472518cdd1af7541a9c5ac8179f6f25, type: 2}
