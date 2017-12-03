@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -67,6 +68,23 @@ public class UiManager : MonoBehaviour
 
     #endregion
 
+    #region FlightPlanPanel
+
+    [Header("Flight plan panel")]
+    [SerializeField]
+    private GameObject _flightPlanPanel;
+
+    [SerializeField]
+    private Text _flightPlanPanelName;
+
+    [SerializeField]
+    private FlightPlanItem _flightPlanItemPrefab;
+
+    [SerializeField]
+    private RectTransform _flightStopsList;
+
+    #endregion
+
     private Camera _camera;
 
     private DaytimeManager _daytimeManager;
@@ -77,8 +95,12 @@ public class UiManager : MonoBehaviour
     private Quaternion oldCameraRot;
 
     private Airport _currentAirport;
+    private Plane _currentPlane;
 
-    private bool _lockClicks;
+    private bool _lockAirportPanelOpen;
+    private bool _selectAirportForPlan;
+
+    private List<Airport> _tempFlightPlan = new List<Airport>();
 
     private void Awake()
     {
@@ -105,10 +127,12 @@ public class UiManager : MonoBehaviour
         transparentDefault.a = 0;
         _airportPanel.GetComponent<Image>().color = transparentDefault;
         _textPanel.GetComponent<Image>().color = transparentDefault;
+        _flightPlanPanel.GetComponent<Image>().color = transparentDefault;
 
         // hide all panels
         _airportPanel.SetActive(false);
         _textPanel.SetActive(false);
+        _flightPlanPanel.SetActive(false);
     }
 
     private void Update()
@@ -116,27 +140,29 @@ public class UiManager : MonoBehaviour
         _daytimeText.text = string.Format("Time: {0}\nDay:{1}\nMonth:{2}", _daytimeManager.TimeOfDayUtc, _daytimeManager.DayOfMonth, _daytimeManager.Month);
 
         // handle opening airport panels
-        if (Input.GetMouseButtonDown(0) && !_lockClicks)
+        if (Input.GetMouseButtonDown(0))
         {
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
             var hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 9))
             {
                 var airport = hit.collider.GetComponent<AirportVisualisation>().Airport;
-                if (!_airportPanel.activeSelf)
+                if (!_lockAirportPanelOpen)
                 {
-                    ShowAirportPanel(airport);
+                    if (!_airportPanel.activeSelf)
+                    {
+                        ShowAirportPanel(airport);
+                    }
+                    else
+                    {
+                        HideAirportPanel(airport);
+                    }
                 }
-                else
+                else if (_selectAirportForPlan)
                 {
-                    HideAirportPanel(airport);
+                    AddFlightPlanItem(airport);
                 }
             }
-        }
-
-        foreach (var plane in _planeManager.Planes)
-        {
-
         }
     }
 
@@ -188,13 +214,13 @@ public class UiManager : MonoBehaviour
 
     private void ShowAirportPanel(Airport airport)
     {
-        _lockClicks = true;
+        _lockAirportPanelOpen = true;
         _currentAirport = airport;
         _airportPanelName.text = airport.Name;
         _airportPanel.SetActive(true);
         LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
-            _lockClicks = false;
+            _lockAirportPanelOpen = false;
         });
     }
 
@@ -205,10 +231,10 @@ public class UiManager : MonoBehaviour
 
     public void HideAirportPanel(Airport airport)
     {
-        _lockClicks = true;
+        _lockAirportPanelOpen = true;
         LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
-            _lockClicks = false;
+            _lockAirportPanelOpen = false;
             _currentAirport = null;
             _airportPanel.SetActive(false);
             if (airport != null)
@@ -249,5 +275,45 @@ public class UiManager : MonoBehaviour
     {
         var listItem = Instantiate(_planeListItemPrefab, _planeList);
         listItem.Plane = plane;
+        listItem.FlightPlanButton.onClick.AddListener(() => ShowFlightPlanPanel(plane));
+    }
+
+    private void ShowFlightPlanPanel(Plane plane)
+    {
+        _lockAirportPanelOpen = true;
+        _currentPlane = plane;
+        _flightPlanPanelName.text = plane.Name;
+        _flightPlanPanel.SetActive(true);
+        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        {
+            _selectAirportForPlan = true;
+        });
+    }
+
+    public void HideFlightPlanPanel()
+    {
+        HideFlightPlanPanel(null);
+    }
+
+    public void HideFlightPlanPanel(Plane plane)
+    {
+        LeanTween.alpha(_airportPanel.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        {
+            _selectAirportForPlan = false;
+            _lockAirportPanelOpen = false;
+            _currentPlane = null;
+            _flightPlanPanel.SetActive(false);
+            if (plane != null)
+            {
+                ShowFlightPlanPanel(plane);
+            }
+        });
+    }
+
+    private void AddFlightPlanItem(Airport airport)
+    {
+        var item = Instantiate(_flightPlanItemPrefab, _flightStopsList);
+        item.Airport = airport;
+        _tempFlightPlan.Add(airport);
     }
 }

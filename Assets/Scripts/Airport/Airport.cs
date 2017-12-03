@@ -13,6 +13,7 @@ public class Airport
     {
         Location = def.Location;
         Name = def.Name;
+        IsUnlocked = def.UnlockedByDefault;
     }
 
     public void Unlock()

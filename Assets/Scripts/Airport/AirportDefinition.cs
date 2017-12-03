@@ -22,9 +22,20 @@ public struct AirportDefinition
         }
     }
 
+    public bool UnlockedByDefault
+    {
+        get
+        {
+            return _unlockedByDefault;
+        }
+    }
+
     [SerializeField]
     private GeoPoint _location;
 
     [SerializeField]
     private string _name;
+
+    [SerializeField]
+    private bool _unlockedByDefault;
 }
