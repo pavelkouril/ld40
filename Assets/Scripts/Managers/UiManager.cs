@@ -26,6 +26,21 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Text _daytimeText;
 
+    #region Buttons
+
+    [Header("Buttons")]
+    [SerializeField]
+    private Button _menuButton;
+
+    [SerializeField]
+    private Button _lockButton;
+
+    [SerializeField]
+    private Button _unlockButton;
+    [SerializeField]
+    private Button _modeButton;
+
+    #endregion
 
     #region Colors
 
@@ -90,7 +105,7 @@ public class UiManager : MonoBehaviour
     #endregion
 
     private Camera _camera;
-
+    private CameraController _cameraController;
     private DaytimeManager _daytimeManager;
     private AirportManager _airportManager;
     private PlaneManager _planeManager;
@@ -114,7 +129,10 @@ public class UiManager : MonoBehaviour
         _planeManager = GetComponent<PlaneManager>();
         _airportManager = GetComponent<AirportManager>();
         _camera = Camera.main;
+        _cameraController = _camera.GetComponent<CameraController>();
         StoreCamera();
+        _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
+        _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
     }
 
     private void Start()
@@ -352,5 +370,12 @@ public class UiManager : MonoBehaviour
         _currentPlane.SetNewPlan(_tempFlightPlan);
         _currentPlane.Dispatch();
         HideFlightPlanPanel();
+    }
+
+    public void ToggleCameraLock()
+    {
+        _cameraController.lockRotation = !_cameraController.lockRotation;
+        _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
+        _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
     }
 }
