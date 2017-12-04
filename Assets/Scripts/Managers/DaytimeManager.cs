@@ -33,6 +33,7 @@ public class DaytimeManager : MonoBehaviour
     public float DayOfMonth { get; set; }
 
     public float Month { get; set; }
+    public float TotalSeconds { get; internal set; }
 
     private UpgradeManager _resourceManager;
     private GameloopManager _gameloopManager;
@@ -48,11 +49,13 @@ public class DaytimeManager : MonoBehaviour
         TimeOfDayUtc = 0.5f;
         DayOfMonth = 1;
         Month = 5;
+        TotalSeconds = 0;
         DebugDate();
     }
 
     private void Update()
     {
+        TotalSeconds += Time.deltaTime;
         TimeOfDayUtc += DeltaTime;
         if (TimeOfDayUtc > 1)
         {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.001237568, g: 0.0009761481, b: 0.0009207999, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012375731, g: 0.00097615324, b: 0.0009207994, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2157,7 +2157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &674024137
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4327,6 +4327,7 @@ MonoBehaviour:
   _upgradesText: {fileID: 425718591}
   _gameMenu: {fileID: 702898130}
   _pauseMenu: {fileID: 2006939736}
+  _gameOverMenu: {fileID: 674024136}
   _menuButton: {fileID: 1191495548}
   _lockButton: {fileID: 1509154108}
   _unlockButton: {fileID: 518076144}
@@ -4338,6 +4339,7 @@ MonoBehaviour:
   _planeList: {fileID: 1257225048}
   _planeListItemPrefab: {fileID: 114834501904506514, guid: eb678b81416725647a7c70fa66fff5d3,
     type: 2}
+  _gameOverScore: {fileID: 354576017}
   _flightPlanPanel: {fileID: 13721007}
   _flightPlanPanelName: {fileID: 289425765}
   _flightPlanSaveButton: {fileID: 754433785}
@@ -4482,7 +4484,7 @@ MonoBehaviour:
   - _location:
       _latitude: 64.80601
       _longtitude: 48.59253
-    _name: Mother Russia
+    _name: Russia
     _unlockedByDefault: 0
   - _location:
       _latitude: 40.720722

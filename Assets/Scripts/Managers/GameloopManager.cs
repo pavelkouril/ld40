@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class GameloopManager : MonoBehaviour
 {
+    private bool _gameOver;
+
+    public float Score { get; set; }
+
     private AirportManager _airportManager;
     private PlaneManager _planeManager;
     private UiManager _uiManager;
@@ -13,7 +17,7 @@ public class GameloopManager : MonoBehaviour
     private UpgradeManager _upgradeManager;
 
     private float airportsSpawnRate = DaytimeManager.kRealSecondsInDay * 3;
-    private float passengerSpawnRate = DaytimeManager.kRealSecondsInDay / 2f;
+    private float passengerSpawnRate = DaytimeManager.kRealSecondsInDay / 1.5f;
     private float upgradesRate = DaytimeManager.kRealSecondsInDay * 3;
     private float planeRate = DaytimeManager.kRealSecondsInDay * 4.5f;
 
@@ -69,14 +73,14 @@ public class GameloopManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(passengerSpawnRate);
-            passengerSpawnRate *= 0.98f;
+            passengerSpawnRate *= 0.97f;
             _airportManager.SpawnAtAllUnlockedAiports();
         }
     }
 
     private IEnumerator UnlockFirstAirport()
     {
-        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 4);
+        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 6);
         var firstAirport = _airportManager.GetRandomAirportCloseTo(_airportManager.startingAirport);
         UnlockAirport(firstAirport);
 
@@ -112,7 +116,7 @@ public class GameloopManager : MonoBehaviour
     {
         foreach (var airport in _airportManager.ActiveAirports)
         {
-            if (airport.PassengerCount > 1.33f)
+            if (airport.PassengerCount > 1.33f && !_gameOver)
             {
                 GameOver();
             }
@@ -121,7 +125,9 @@ public class GameloopManager : MonoBehaviour
 
     private void GameOver()
     {
-
+        _gameOver = true;
+        Score = _daytimeManager.TotalSeconds;
+        _uiManager.Gameover();
     }
 
     public void UnlockAirport()
