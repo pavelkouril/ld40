@@ -48,6 +48,9 @@ public class PlaneListItem : MonoBehaviour
 
     private Plane _plane;
 
+    [SerializeField]
+    private Text _level;
+
     private void Start()
     {
 
@@ -55,7 +58,7 @@ public class PlaneListItem : MonoBehaviour
 
     private void Update()
     {
-        _name.text = _plane.Name + " Lv " + (int)_plane.CurrentUpgrade;
+        _level.text = ((int)_plane.CurrentUpgrade).ToString();
         if (_plane.CurrentUpgrade == Plane.Upgrades.Level2 && _upgradeButton.enabled)
         {
             _upgradeButton.enabled = false;

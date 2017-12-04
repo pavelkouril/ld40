@@ -13,7 +13,7 @@ public class GameloopManager : MonoBehaviour
     private UpgradeManager _upgradeManager;
 
     private float airportsSpawnRate = DaytimeManager.kRealSecondsInDay * 3;
-    private float passengerSpawnRate = DaytimeManager.kRealSecondsInDay / 2f;
+    private float passengerSpawnRate = DaytimeManager.kRealSecondsInDay / 1.5f;
     private float upgradesRate = DaytimeManager.kRealSecondsInDay * 3;
     private float planeRate = DaytimeManager.kRealSecondsInDay * 4.5f;
 
@@ -69,14 +69,14 @@ public class GameloopManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(passengerSpawnRate);
-            passengerSpawnRate *= 0.98f;
+            passengerSpawnRate *= 0.97f;
             _airportManager.SpawnAtAllUnlockedAiports();
         }
     }
 
     private IEnumerator UnlockFirstAirport()
     {
-        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 4);
+        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 6);
         var firstAirport = _airportManager.GetRandomAirportCloseTo(_airportManager.startingAirport);
         UnlockAirport(firstAirport);
 

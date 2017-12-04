@@ -183,6 +183,8 @@ public class UiManager : MonoBehaviour
         _flightPlanPanel.SetActive(false);
         _pauseMenu.SetActive(false);
         _gameMenu.SetActive(true);
+
+        UpdateUpgrades();
     }
 
     private void Update()
@@ -287,6 +289,7 @@ public class UiManager : MonoBehaviour
         listItem.Plane = plane;
         listItem.FlightPlanButton.onClick.AddListener(() => ShowFlightPlanPanel(plane));
         listItem.UpgradeButton.onClick.AddListener(() => UpgradePlane(plane));
+        listItem.UpgradeButton.enabled = _upgradeManager.RemainingUpgrades > 0;
     }
 
     private void ShowFlightPlanPanel(Plane plane)
@@ -407,11 +410,7 @@ public class UiManager : MonoBehaviour
     {
         foreach (var item in _planeList.GetComponentsInChildren<PlaneListItem>())
         {
-            item.UpgradeButton.interactable = _upgradeManager.RemainingUpgrades > 0;
-            if (item.Plane.CurrentUpgrade == Plane.Upgrades.Level2)
-            {
-                item.UpgradeButton.gameObject.SetActive(false);
-            }
+            item.UpgradeButton.gameObject.SetActive(_upgradeManager.RemainingUpgrades > 0);
         }
         _upgradesText.text = _upgradeManager.RemainingUpgrades + " Upgrades";
     }
