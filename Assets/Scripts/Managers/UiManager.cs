@@ -119,6 +119,12 @@ public class UiManager : MonoBehaviour
 
     private bool _sameStartAndEnd;
 
+    [SerializeField]
+    private int _pathTessellation;
+    [SerializeField]
+    private Material _pathMaterial;
+    private PathEffect _pathEffect;
+
     private void Awake()
     {
         _daytimeManager = GetComponent<DaytimeManager>();
@@ -130,6 +136,7 @@ public class UiManager : MonoBehaviour
         StoreCamera();
         _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
         _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+        _pathEffect = new PathEffect(_pathTessellation);
     }
 
     private void Start()
@@ -182,6 +189,8 @@ public class UiManager : MonoBehaviour
         {
             _stopsCount.text = _tempFlightPlan.Count + "/" + _currentPlane.MaxStops;
         }
+
+        _pathEffect.Update(Time.deltaTime);
     }
 
     public void ToggleMode()
@@ -256,6 +265,8 @@ public class UiManager : MonoBehaviour
 
     private void ShowFlightPlanPanel(Plane plane)
     {
+        _pathEffect.Enable(_globe.gameObject, _pathMaterial);
+
         _lockAirportPanelOpen = true;
         _currentPlane = plane;
         SetFlightPanelItems(plane);
@@ -285,6 +296,8 @@ public class UiManager : MonoBehaviour
                 ShowFlightPlanPanel(plane);
             }
         });
+
+        _pathEffect.Disable();
     }
 
     private void AddFlightPlanItem(Airport airport)
@@ -295,6 +308,17 @@ public class UiManager : MonoBehaviour
             item.Airport = airport;
             _tempFlightPlan.Add(airport);
             _sameStartAndEnd = airport == _tempFlightPlan.FirstOrDefault();
+
+            _pathEffect.Clear();
+            for (int i = 0; i < _tempFlightPlan.Count - 1; i++)
+            {
+                _pathEffect.AddRoute(_tempFlightPlan[i].Location, _tempFlightPlan[i + 1].Location);
+            }
+
+            if (_tempFlightPlan.Count > 2)
+            {
+                _pathEffect.AddRoute(_tempFlightPlan[_tempFlightPlan.Count - 1].Location, _tempFlightPlan[0].Location);
+            }
         }
     }
 
@@ -314,6 +338,8 @@ public class UiManager : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
+
+        _pathEffect.Clear();
     }
 
     public void SaveFlightPlan()

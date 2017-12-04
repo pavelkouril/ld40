@@ -48,6 +48,22 @@ public class RoutePath
         return v0;
     }
 
+    public static void BuildPath(GeoPoint from, GeoPoint to, int steps, ref List<Vector3> vertices, ref float distance)
+    {
+        distance = GeoPoint.Distance(from, to);
+
+        Quaternion q0 = Quaternion.FromToRotation(from.ToSphericalCartesian(), from.ToSphericalCartesian());
+        Quaternion q1 = Quaternion.FromToRotation(from.ToSphericalCartesian(), to.ToSphericalCartesian());
+
+        float tStep = 1.0f / (float)steps;
+        for (int i = 0; i <= steps; i++)
+        {
+            Quaternion q = Quaternion.Slerp(q0, q1, i * tStep);
+            Vector3 v = q * from.ToSphericalCartesian();
+            vertices.Add(v);
+        }
+    }
+
     /*public void Update()
     {
         pathProgress += Time.deltaTime * mSpeed;
