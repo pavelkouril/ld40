@@ -48,14 +48,28 @@ public class CameraController : MonoBehaviour
 
     private float interpolation = 1.0f;
 
-    public bool lockRotation = false;
-    
+    public bool lockRotation = true;
+    private Quaternion lockQuaternion;
+
     public GameObject light;
 
     public void Start()
     {
         angleX = transform.eulerAngles.y;
         angleY = transform.eulerAngles.x;
+        lockQuaternion = center.transform.rotation;
+    }
+
+    public void Lock()
+    {
+        lockRotation = true;
+        lockQuaternion = center.transform.rotation * lockQuaternion;
+    }
+
+    public void Unlock()
+    {
+        lockRotation = false;
+        lockQuaternion = Quaternion.Inverse(center.transform.rotation) * lockQuaternion;
     }
 
     private static float ClampAngle(ref float speed, float angle, float min, float max)
@@ -220,11 +234,11 @@ public class CameraController : MonoBehaviour
 
         if (lockRotation)
         {
-            orbitRotation = Quaternion.Euler(angleY, angleX, 0.0f);
+            orbitRotation = lockQuaternion * Quaternion.Euler(angleY, angleX, 0.0f);
         }
         else
         {
-            orbitRotation = center.transform.rotation * Quaternion.Euler(angleY, angleX, 0.0f);
+            orbitRotation = center.transform.rotation * lockQuaternion * Quaternion.Euler(angleY, angleX, 0.0f);
         }
 
         distance = ClampZoom(ref speedZoom, distance, zoomMin, zoomMax);

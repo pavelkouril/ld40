@@ -365,9 +365,24 @@ public class UiManager : MonoBehaviour
 
     public void ToggleCameraLock()
     {
-        _cameraController.lockRotation = !_cameraController.lockRotation;
-        _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
-        _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+        //_cameraController.lockRotation = !_cameraController.lockRotation;
+        //_unlockButton.gameObject.SetActive(_cameraController.lockRotation);
+        //_lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+
+        bool locked = _cameraController.lockRotation;
+
+        if (locked)
+        {
+            _cameraController.Unlock();
+            _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
+            _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+        }
+        else
+        {
+            _cameraController.Lock();
+            _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
+            _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+        }
     }
 
     public void UpgradePlane(Plane plane)
