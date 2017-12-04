@@ -53,6 +53,12 @@ public class CameraController : MonoBehaviour
 
     public GameObject light;
 
+    public float _scrollSensitivity = -400.0f;
+    private float _mouseX;
+    private float _mouseY;
+    public float _mouseXSensitivity = 0.2f;
+    public float _mouseYSensitivity = 0.2f;
+
     public void Start()
     {
         angleX = transform.eulerAngles.y;
@@ -220,6 +226,38 @@ public class CameraController : MonoBehaviour
             dragZoom = false;
         }
 
+        if (Input.GetMouseButton(0))
+        {
+            float dx = Input.mousePosition.x - _mouseX;
+            _mouseX = Input.mousePosition.x;
+
+            speedX += acceleration * _mouseXSensitivity * Time.deltaTime * dx;
+
+            if (Mathf.Abs(speedX) > 0.001f)
+            {
+                dragX = false;
+            }
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            float dy = _mouseY - Input.mousePosition.y;
+            _mouseY = Input.mousePosition.y;
+
+            speedY += acceleration * _mouseYSensitivity * Time.deltaTime * dy;
+
+            if (Mathf.Abs(speedY) > 0.001f)
+            {
+                dragY = false;
+            }
+        }
+
+        if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0.0f)
+        {
+            speedZoom += acceleration * _scrollSensitivity * Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime;
+            dragZoom = false;
+        }
+
         Drag();
 
         speedX = Mathf.Clamp(speedX, -speed, speed);
@@ -326,5 +364,8 @@ public class CameraController : MonoBehaviour
                 transform.position = Vector3.Lerp(orbitPosition, planePosition, interpolation);
                 break;
         }
+
+        _mouseX = Input.mousePosition.x;
+        _mouseY = Input.mousePosition.y;
     }
 }
