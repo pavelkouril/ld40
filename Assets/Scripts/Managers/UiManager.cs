@@ -27,6 +27,9 @@ public class UiManager : MonoBehaviour
     private Text _daytimeText;
 
     [SerializeField]
+    private Text _dateText;
+
+    [SerializeField]
     private Text _upgradesText;
 
     #region Buttons
@@ -163,7 +166,9 @@ public class UiManager : MonoBehaviour
 
     private void Update()
     {
-        _daytimeText.text = string.Format("Time: {0}\nDay:{1}\nMonth:{2}", _daytimeManager.TimeOfDayUtc, _daytimeManager.DayOfMonth, _daytimeManager.Month);
+        // todo proper minutes
+        _daytimeText.text = string.Format("{0:00}:{1:00} UTC", 24f * _daytimeManager.TimeOfDayUtc, 0);
+        _dateText.text = string.Format("{0:00}/{1:00}", _daytimeManager.DayOfMonth, _daytimeManager.Month);
 
         // handle opening airport panels
         if (Input.GetMouseButtonDown(0))
