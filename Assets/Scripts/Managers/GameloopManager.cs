@@ -107,6 +107,7 @@ public class GameloopManager : MonoBehaviour
     {
         if (_airportManager.UnlockAirport(airport))
         {
+            _uiManager.NotifyNewAirport(airport);
             var plane = _planeManager.AddPlane();
             _uiManager.AddPlaneListItem(plane);
         }

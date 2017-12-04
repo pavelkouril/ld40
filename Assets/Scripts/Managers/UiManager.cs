@@ -45,6 +45,9 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject _gameOverMenu;
 
+    [SerializeField]
+    private AirportNotification _airportNotification;
+
 
     #region Buttons
 
@@ -157,6 +160,7 @@ public class UiManager : MonoBehaviour
     private InputField _inputField;
     public int _score;
     private UnityWebRequest _www;
+    private Airport _notifiedAirport;
 
     private void Awake()
     {
@@ -172,6 +176,21 @@ public class UiManager : MonoBehaviour
         _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
         _pathEffect = new PathEffect(_pathTessellation);
         _preserveColor = _preserveAlphaPanel.color;
+    }
+
+    internal void NotifyNewAirport(Airport airport)
+    {
+        _notifiedAirport = airport;
+        _airportNotification.gameObject.SetActive(true);
+    }
+
+    public void ClickAirportNotification()
+    {
+        if (_notifiedAirport != null)
+        {
+            _airportNotification.gameObject.SetActive(false);
+            // _cameraController.dosomething
+        }
     }
 
     private void Start()
@@ -201,6 +220,8 @@ public class UiManager : MonoBehaviour
         _gameOverMenu.SetActive(false);
 
         UpdateUpgrades();
+
+        _airportNotification.gameObject.SetActive(false);
     }
 
     private void Update()
