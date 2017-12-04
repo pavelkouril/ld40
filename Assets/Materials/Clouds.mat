@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlaneMaterial
-  m_Shader: {fileID: 4800000, guid: 458f59ae144d107418c60e12f65312e6, type: 3}
+  m_Name: Clouds
+  m_Shader: {fileID: 4800000, guid: 2098d727dadf7ba4eb647b9de36f5813, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -18,30 +18,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Snow_Bricks_ambientOcclusion:
-        m_Texture: {fileID: 2800000, guid: 81c8d2045c2d6c6478d0f8895049af15, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Snow_Bricks_basecolor:
-        m_Texture: {fileID: 2800000, guid: f0168b212ee6bc64cb4265af7fb6d6e7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Snow_Bricks_height:
-        m_Texture: {fileID: 2800000, guid: d84f76d5c89a17443b0c1eba53ce7766, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Snow_Bricks_metallic:
-        m_Texture: {fileID: 2800000, guid: daa0bbee15c0a294ba824c65b0881c25, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Snow_Bricks_normal:
-        m_Texture: {fileID: 2800000, guid: 5998389c0f7a95a40b51f8af66545389, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Snow_Bricks_roughness:
-        m_Texture: {fileID: 2800000, guid: a2b434c2ac7c7544589f46881f2b9f21, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -78,6 +54,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: 215edd18f749fde48b18e0a2c2450a58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 215edd18f749fde48b18e0a2c2450a58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -90,7 +74,6 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightStrength: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -98,11 +81,9 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TessPhongStrength: 0.5
-    - _TessValue: 30
     - _UVSec: 0
     - _ZWrite: 1
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

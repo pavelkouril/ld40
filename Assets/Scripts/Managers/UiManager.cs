@@ -32,6 +32,12 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Text _upgradesText;
 
+    [SerializeField]
+    private GameObject _gameMenu;
+
+    [SerializeField]
+    private GameObject _pauseMenu;
+
     #region Buttons
 
     [Header("Buttons")]
@@ -158,10 +164,13 @@ public class UiManager : MonoBehaviour
         transparentDefault.a = 0;
         _textPanel.GetComponent<Image>().color = transparentDefault;
         _flightPlanPanel.GetComponent<Image>().color = transparentDefault;
+        _pauseMenu.GetComponent<Image>().color = transparentDefault;
 
         // hide all panels
         _textPanel.SetActive(false);
         _flightPlanPanel.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _gameMenu.SetActive(true);
     }
 
     private void Update()
@@ -378,5 +387,42 @@ public class UiManager : MonoBehaviour
             }
         }
         _upgradesText.text = _upgradeManager.RemainingUpgrades + " Upgrades";
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        LeanTween.alpha(_gameMenu.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        {
+            _pauseMenu.SetActive(true);
+            _gameMenu.SetActive(false);
+            LeanTween.alpha(_pauseMenu.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+            {
+            });
+        });
+    }
+
+    public void ResumeGame()
+    {
+        _gameMenu.SetActive(true);
+        LeanTween.alpha(_pauseMenu.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        {
+            _pauseMenu.SetActive(false);
+            LeanTween.alpha(_gameMenu.GetComponent<RectTransform>(), 1, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+            {
+                Time.timeScale = 1;
+            });
+        });
+
+    }
+
+    public void QuitToMenu()
+    {
+
+    }
+
+    public void QuitToWindows()
+    {
+        Application.Quit();
     }
 }
