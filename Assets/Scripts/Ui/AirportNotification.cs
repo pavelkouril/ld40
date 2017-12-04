@@ -13,6 +13,6 @@ public class AirportNotification : MonoBehaviour
 
     private void Update()
     {
-        // LeanTween.scale(_rt, new Vector3(2, 2, 2), 1).setLoopClamp();
+        LeanTween.color(_rt, Color.red, 1).setLoopPingPong();
     }
 }
