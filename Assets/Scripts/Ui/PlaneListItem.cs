@@ -43,6 +43,9 @@ public class PlaneListItem : MonoBehaviour
     [SerializeField]
     private Button _upgradeButton;
 
+    [SerializeField]
+    private Text _routeText;
+
     private Plane _plane;
 
     private void Start()
@@ -52,6 +55,11 @@ public class PlaneListItem : MonoBehaviour
 
     private void Update()
     {
-
+        _name.text = _plane.Name + " Lv " + (int)_plane.CurrentUpgrade;
+        if (_plane.CurrentUpgrade == Plane.Upgrades.Level2 && _upgradeButton.enabled)
+        {
+            _upgradeButton.enabled = false;
+        }
+        _routeText.text = _plane.IsDispatched ? "To: " + _plane.TargetAirport.Name : "Flight plan not set";
     }
 }

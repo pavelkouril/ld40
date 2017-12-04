@@ -53,9 +53,16 @@ public class PlaneManager : MonoBehaviour
 
     private string RandomName()
     {
-        var name = _names[UnityEngine.Random.Range(0, _names.Count)];
-        _names.Remove(name);
-        return name;
+        if (_names.Count > 0)
+        {
+            var name = _names[UnityEngine.Random.Range(0, _names.Count)];
+            _names.Remove(name);
+            return name;
+        }
+        else
+        {
+            return "Unknown";
+        }
     }
 
     public bool UpgradePlane()

@@ -57,6 +57,13 @@ public class Plane : MonoBehaviour
     public float Speed = 300.0f;
 
     public bool IsDispatched { get; private set; }
+    public Airport TargetAirport
+    {
+        get
+        {
+            return _currentTarget;
+        }
+    }
 
     private List<Airport> _flightPlan = new List<Airport>();
 
