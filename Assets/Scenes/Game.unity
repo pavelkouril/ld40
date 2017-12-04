@@ -3601,7 +3601,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 1538067c043b5c244833d4d5e50e91c7, type: 3}
+    m_Font: {fileID: 12800000, guid: f498efb334851d64e8588bb9ea9ee9bc, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
@@ -3771,6 +3771,7 @@ MonoBehaviour:
   _globe: {fileID: 1697868583}
   _map: {fileID: 113118342}
   _daytimeText: {fileID: 547229110}
+  _preserveAlphaPanel: {fileID: 1319766787}
   _dateText: {fileID: 1130061324}
   _upgradesText: {fileID: 425718591}
   _gameMenu: {fileID: 702898130}
@@ -3820,6 +3821,26 @@ MonoBehaviour:
   - Robin
   - Woodpecker
   - Owl
+  - Hummingbird
+  - Albatross
+  - Hawk
+  - Condor
+  - Nightingale
+  - Goshawk
+  - Mosquito
+  - Black Widow
+  - Grasshopper
+  - Dolphin
+  - Stingray
+  - Buffalo
+  - Bearcat
+  - Skylark
+  - Dove
+  - Viper
+  - Beast
+  - Cat
+  - Dog
+  - Butterfly
 --- !u!114 &1718258738
 MonoBehaviour:
   m_ObjectHideFlags: 0

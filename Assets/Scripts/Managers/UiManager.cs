@@ -27,6 +27,9 @@ public class UiManager : MonoBehaviour
     private Text _daytimeText;
 
     [SerializeField]
+    private Image _preserveAlphaPanel;
+
+    [SerializeField]
     private Text _dateText;
 
     [SerializeField]
@@ -128,6 +131,8 @@ public class UiManager : MonoBehaviour
 
     private bool _sameStartAndEnd;
 
+    private Color _preserveColor;
+
     [SerializeField]
     private int _pathTessellation;
     [SerializeField]
@@ -146,6 +151,7 @@ public class UiManager : MonoBehaviour
         _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
         _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
         _pathEffect = new PathEffect(_pathTessellation);
+        _preserveColor = _preserveAlphaPanel.color;
     }
 
     private void Start()
@@ -406,9 +412,11 @@ public class UiManager : MonoBehaviour
 
     public void PauseGame()
     {
+        _preserveAlphaPanel.color = _preserveColor;
         Time.timeScale = 0;
         LeanTween.alpha(_gameMenu.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
+            _preserveAlphaPanel.color = _preserveColor;
             _pauseMenu.SetActive(true);
             _gameMenu.SetActive(false);
             LeanTween.alpha(_pauseMenu.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
@@ -419,13 +427,16 @@ public class UiManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        _preserveAlphaPanel.color = _preserveColor;
         _gameMenu.SetActive(true);
         LeanTween.alpha(_pauseMenu.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
         {
+            _preserveAlphaPanel.color = _preserveColor;
             _pauseMenu.SetActive(false);
             LeanTween.alpha(_gameMenu.GetComponent<RectTransform>(), 1, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
             {
                 Time.timeScale = 1;
+                _preserveAlphaPanel.color = _preserveColor;
             });
         });
 
