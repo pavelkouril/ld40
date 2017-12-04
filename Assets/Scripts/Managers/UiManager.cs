@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class UiManager : MonoBehaviour
 {
@@ -138,6 +139,11 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Material _pathMaterial;
     private PathEffect _pathEffect;
+
+    [SerializeField]
+    private InputField _inputField;
+    public int _score;
+    private UnityWebRequest _www;
 
     private void Awake()
     {
@@ -440,6 +446,31 @@ public class UiManager : MonoBehaviour
             });
         });
 
+    }
+
+    IEnumerator Upload()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", _inputField.text.Replace("|", " ").ToString());
+        form.AddField("score", (int)(_score));
+        _www = UnityWebRequest.Post("https://otte.cz/ld40/index.php", form);
+        yield return _www.Send();
+    }
+
+    public void SendHighscore()
+    {
+        if (_inputField.text.Length > 0)
+        {
+            StartCoroutine(Upload());
+
+            System.Threading.Thread.Sleep(100);
+            while (!_www.isDone && _www.error == null)
+            {
+                System.Threading.Thread.Sleep(100);
+            }
+        }
+
+        QuitToMenu();
     }
 
     public void QuitToMenu()
