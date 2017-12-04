@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.010408884, g: 0.008210177, b: 0.007744625, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012375682, g: 0.00097614824, b: 0.00092079985, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -224,6 +224,10 @@ MonoBehaviour:
   _globe: {fileID: 635224078}
   _map: {fileID: 1679678605}
   _daytimeText: {fileID: 91168333}
+  _dateText: {fileID: 0}
+  _upgradesText: {fileID: 0}
+  _gameMenu: {fileID: 0}
+  _pauseMenu: {fileID: 0}
   _menuButton: {fileID: 0}
   _lockButton: {fileID: 0}
   _unlockButton: {fileID: 0}
@@ -232,8 +236,6 @@ MonoBehaviour:
   _targetAlpha: 0
   _textPanel: {fileID: 0}
   _textPanelContent: {fileID: 0}
-  _airportPanel: {fileID: 0}
-  _airportPanelName: {fileID: 0}
   _planeList: {fileID: 0}
   _planeListItemPrefab: {fileID: 0}
   _flightPlanPanel: {fileID: 0}
@@ -241,6 +243,9 @@ MonoBehaviour:
   _flightPlanSaveButton: {fileID: 0}
   _flightPlanItemPrefab: {fileID: 0}
   _flightStopsList: {fileID: 0}
+  _stopsCount: {fileID: 0}
+  _pathTessellation: 0
+  _pathMaterial: {fileID: 0}
 --- !u!114 &122147547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +379,6 @@ MonoBehaviour:
   _mapVisPrefab: {fileID: 114004977850416982, guid: 4fb2b70781dc29a44a96ddc8b315f9ff,
     type: 2}
   _globeVisParent: {fileID: 635224079}
-  _mapVisParent: {fileID: 1679678607}
 --- !u!4 &122147549
 Transform:
   m_ObjectHideFlags: 0
@@ -1305,11 +1309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8858b0b30ed69b49bdaac1b9ff32845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1679678607 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4967463708111386, guid: 576a5e5d6615f184caad37457491ee4f,
-    type: 2}
-  m_PrefabInternal: {fileID: 637898425}
 --- !u!1001 &1691620756
 Prefab:
   m_ObjectHideFlags: 0
@@ -1353,6 +1352,16 @@ Prefab:
       propertyPath: m_Name
       value: Plane (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 198790182262954176, guid: fb08d0c84f9b626499c3d3a587111bd1,
+        type: 2}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 1418224294}
+    - target: {fileID: 198598881076324908, guid: fb08d0c84f9b626499c3d3a587111bd1,
+        type: 2}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 1418224294}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb08d0c84f9b626499c3d3a587111bd1, type: 2}
   m_IsPrefabParent: 0
@@ -1429,7 +1438,9 @@ MonoBehaviour:
   m_ShowCustomSorter: 0
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
+  m_BeforeStackBundles:
+  - assemblyQualifiedName: AtmosphericScatteringPost, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_AfterStackBundles: []
 --- !u!81 &1843438585
 AudioListener:
@@ -1522,6 +1533,7 @@ MonoBehaviour:
   planeZoomMax: 5
   state: 0
   lockRotation: 0
+  light: {fileID: 0}
 --- !u!1001 &1929139193
 Prefab:
   m_ObjectHideFlags: 0
