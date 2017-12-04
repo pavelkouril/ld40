@@ -26,6 +26,9 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private Text _daytimeText;
 
+    [SerializeField]
+    private Text _upgradesText;
+
     #region Buttons
 
     [Header("Buttons")]
@@ -91,6 +94,9 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private RectTransform _flightStopsList;
 
+    [SerializeField]
+    private Text _stopsCount;
+
     #endregion
 
     private Camera _camera;
@@ -98,6 +104,7 @@ public class UiManager : MonoBehaviour
     private DaytimeManager _daytimeManager;
     private AirportManager _airportManager;
     private PlaneManager _planeManager;
+    private UpgradeManager _upgradeManager;
 
     private Vector3 oldCameraPos;
     private Quaternion oldCameraRot;
@@ -117,6 +124,7 @@ public class UiManager : MonoBehaviour
         _daytimeManager = GetComponent<DaytimeManager>();
         _planeManager = GetComponent<PlaneManager>();
         _airportManager = GetComponent<AirportManager>();
+        _upgradeManager = GetComponent<UpgradeManager>();
         _camera = Camera.main;
         _cameraController = _camera.GetComponent<CameraController>();
         StoreCamera();
@@ -160,7 +168,7 @@ public class UiManager : MonoBehaviour
                 var airport = hit.collider.GetComponent<AirportVisualisation>().Airport;
                 if (!_lockAirportPanelOpen && !airport.IsUnlocked)
                 {
-                    
+
                 }
                 else if (_selectAirportForPlan && airport.IsUnlocked)
                 {
@@ -170,6 +178,10 @@ public class UiManager : MonoBehaviour
         }
 
         _flightPlanSaveButton.interactable = !_sameStartAndEnd && _tempFlightPlan.Count >= 2;
+        if (_currentPlane)
+        {
+            _stopsCount.text = _tempFlightPlan.Count + "/" + _currentPlane.MaxStops;
+        }
     }
 
     public void ToggleMode()
@@ -218,8 +230,6 @@ public class UiManager : MonoBehaviour
         _camera.transform.localRotation = oldCameraRot;
     }
 
-  
-
     private void ShowTextPanel(string text)
     {
         _textPanel.SetActive(true);
@@ -241,6 +251,7 @@ public class UiManager : MonoBehaviour
         var listItem = Instantiate(_planeListItemPrefab, _planeList);
         listItem.Plane = plane;
         listItem.FlightPlanButton.onClick.AddListener(() => ShowFlightPlanPanel(plane));
+        listItem.UpgradeButton.onClick.AddListener(() => UpgradePlane(plane));
     }
 
     private void ShowFlightPlanPanel(Plane plane)
@@ -278,29 +289,30 @@ public class UiManager : MonoBehaviour
 
     private void AddFlightPlanItem(Airport airport)
     {
-        if (airport != _tempFlightPlan.LastOrDefault())
+        if (airport != _tempFlightPlan.LastOrDefault() && _tempFlightPlan.Count < _currentPlane.MaxStops)
         {
             var item = Instantiate(_flightPlanItemPrefab, _flightStopsList);
             item.Airport = airport;
             _tempFlightPlan.Add(airport);
             _sameStartAndEnd = airport == _tempFlightPlan.FirstOrDefault();
         }
-        else
-        {
-            Debug.Log("Can't have same end points.");
-        }
     }
 
     private void SetFlightPanelItems(Plane plane)
+    {
+        ClearFlightPlan();
+        foreach (var stop in plane.FlightPlan)
+        {
+            AddFlightPlanItem(stop);
+        }
+    }
+
+    public void ClearFlightPlan()
     {
         _tempFlightPlan.Clear();
         foreach (var item in _flightStopsList.GetComponentsInChildren<FlightPlanItem>())
         {
             Destroy(item.gameObject);
-        }
-        foreach (var stop in plane.FlightPlan)
-        {
-            AddFlightPlanItem(stop);
         }
     }
 
@@ -316,5 +328,24 @@ public class UiManager : MonoBehaviour
         _cameraController.lockRotation = !_cameraController.lockRotation;
         _unlockButton.gameObject.SetActive(_cameraController.lockRotation);
         _lockButton.gameObject.SetActive(!_cameraController.lockRotation);
+    }
+
+    public void UpgradePlane(Plane plane)
+    {
+        _upgradeManager.Use(plane);
+        UpdateUpgrades();
+    }
+
+    public void UpdateUpgrades()
+    {
+        foreach (var item in _planeList.GetComponentsInChildren<PlaneListItem>())
+        {
+            item.UpgradeButton.interactable = _upgradeManager.RemainingUpgrades > 0;
+            if (item.Plane.CurrentUpgrade == Plane.Upgrades.Level2)
+            {
+                item.UpgradeButton.gameObject.SetActive(false);
+            }
+        }
+        _upgradesText.text = _upgradeManager.RemainingUpgrades + " Upgrades";
     }
 }

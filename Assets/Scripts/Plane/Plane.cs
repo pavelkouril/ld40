@@ -7,6 +7,13 @@ public class Plane : MonoBehaviour
 {
     public string Name { get; set; }
 
+    public enum Upgrades
+    {
+        None,
+        Level1,
+        Level2,
+    };
+
     public bool HasTarget
     {
         get
@@ -23,6 +30,30 @@ public class Plane : MonoBehaviour
         }
     }
 
+    public Upgrades CurrentUpgrade
+    {
+        get
+        {
+            return _currentUpgrade;
+        }
+    }
+
+    public int MaxStops
+    {
+        get
+        {
+            if (_currentUpgrade == Upgrades.Level1)
+            {
+                return 3;
+            }
+            if (_currentUpgrade == Upgrades.Level2)
+            {
+                return 5;
+            }
+            return 2;
+        }
+    }
+
     public float Speed = 300.0f;
 
     public bool IsDispatched { get; private set; }
@@ -30,10 +61,12 @@ public class Plane : MonoBehaviour
     private List<Airport> _flightPlan = new List<Airport>();
 
     private Queue<Airport> _airportQueue = new Queue<Airport>();
-    
+
     private Airport _previousTarget;
     private Airport _currentTarget;
     private RoutePath _currentRoute;
+
+    private Upgrades _currentUpgrade;
 
     private bool _awaitingNewPlan;
 
@@ -117,5 +150,15 @@ public class Plane : MonoBehaviour
             _currentRoute = new RoutePath(_previousTarget.Location, _currentTarget.Location, Speed);
             gameObject.SetActive(true);
         }
+    }
+
+    public bool Upgrade()
+    {
+        if (_currentUpgrade != Upgrades.Level2)
+        {
+            _currentUpgrade = _currentUpgrade + 1;
+            return true;
+        }
+        return false;
     }
 }

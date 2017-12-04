@@ -24,11 +24,11 @@ public class PlaneManager : MonoBehaviour
 
     private List<Plane> _planes = new List<Plane>();
 
-    private ResourceManager _resourceManager;
+    private UpgradeManager _resourceManager;
 
     private void Awake()
     {
-        _resourceManager = GetComponent<ResourceManager>();
+        _resourceManager = GetComponent<UpgradeManager>();
     }
 
     private void Start()
@@ -41,22 +41,14 @@ public class PlaneManager : MonoBehaviour
 
     }
 
+
     public Plane AddPlane()
     {
-        return AddPlane(false);
-    }
-
-    public Plane AddPlane(bool gratis)
-    {
-        if (gratis || _resourceManager.UsePlane())
-        {
-            var plane = Instantiate(_planePrefab, _globe);
-            plane.Name = RandomName();
-            plane.gameObject.SetActive(false);
-            _planes.Add(plane);
-            return plane;
-        }
-        return null;
+        var plane = Instantiate(_planePrefab, _globe);
+        plane.Name = RandomName();
+        plane.gameObject.SetActive(false);
+        _planes.Add(plane);
+        return plane;
     }
 
     private string RandomName()

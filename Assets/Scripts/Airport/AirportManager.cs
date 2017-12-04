@@ -20,13 +20,21 @@ public class AirportManager : MonoBehaviour
 
     private Dictionary<GeoPoint, Airport> _airports = new Dictionary<GeoPoint, Airport>();
 
-    private ResourceManager _resourceManager;
+    private UpgradeManager _resourceManager;
 
     public Airport startingAirport;
 
+    public IEnumerable<Airport> ActiveAirports
+    {
+        get
+        {
+            return _airports.Values.Where(a => a.IsUnlocked);
+        }
+    }
+
     private void Awake()
     {
-        _resourceManager = GetComponent<ResourceManager>();
+        _resourceManager = GetComponent<UpgradeManager>();
         foreach (var def in _airportDefinitions)
         {
             var airport = new Airport(def);
@@ -37,7 +45,7 @@ public class AirportManager : MonoBehaviour
             }
 
             var globeVis = Instantiate(_globeVisPrefab, _globeVisParent.position + def.Location.ToSphericalCartesian(), Quaternion.identity, _globeVisParent);
-            globeVis.Airport = airport;            
+            globeVis.Airport = airport;
         }
     }
 

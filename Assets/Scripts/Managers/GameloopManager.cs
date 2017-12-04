@@ -10,7 +10,12 @@ public class GameloopManager : MonoBehaviour
     private UiManager _uiManager;
     private DaytimeManager _daytimeManager;
     private PassengerManager _passengerManager;
-    private float airportsSpawnRate;
+    private UpgradeManager _upgradeManager;
+
+    private float airportsSpawnRate = DaytimeManager.kRealSecondsInDay * 3;
+    private float passengerSpawnRate = DaytimeManager.kRealSecondsInDay / 2f;
+    private float upgradesRate = DaytimeManager.kRealSecondsInDay * 3;
+    private float planeRate = DaytimeManager.kRealSecondsInDay * 4.5f;
 
     private void Awake()
     {
@@ -19,12 +24,37 @@ public class GameloopManager : MonoBehaviour
         _uiManager = GetComponent<UiManager>();
         _daytimeManager = GetComponent<DaytimeManager>();
         _passengerManager = GetComponent<PassengerManager>();
+        _upgradeManager = GetComponent<UpgradeManager>();
     }
 
     private void Start()
     {
         StartCoroutine(UnlockFirstAirport());
         StartCoroutine(SpawnFirstPassengers());
+        StartCoroutine(SpawnFirstPassengers());
+        StartCoroutine(Upgrades());
+        StartCoroutine(Planes());
+    }
+
+    private IEnumerator Planes()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(planeRate);
+            planeRate *= 0.925f;
+            _uiManager.AddPlaneListItem(_planeManager.AddPlane());
+        }
+    }
+
+    private IEnumerator Upgrades()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(upgradesRate);
+            upgradesRate *= 1.03f;
+            _upgradeManager.Receive();
+            _uiManager.UpdateUpgrades();
+        }
     }
 
     private IEnumerator SpawnFirstPassengers()
@@ -38,43 +68,58 @@ public class GameloopManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 4);
+            yield return new WaitForSeconds(passengerSpawnRate);
+            passengerSpawnRate *= 0.98f;
             _airportManager.SpawnAtAllUnlockedAiports();
         }
     }
 
     private IEnumerator UnlockFirstAirport()
     {
-        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 3);
-        var airport = _airportManager.GetRandomAirportCloseTo(_airportManager.startingAirport);
-        if (_airportManager.UnlockAirport(airport))
-        {
-            var plane = _planeManager.AddPlane(true);
-            _uiManager.AddPlaneListItem(plane);
-        }
+        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 4);
+        var firstAirport = _airportManager.GetRandomAirportCloseTo(_airportManager.startingAirport);
+        UnlockAirport(firstAirport);
+
+        yield return new WaitForSeconds(DaytimeManager.kRealSecondsInDay / 2);
+        UnlockAirport(_airportManager.GetRandomAirportCloseTo(firstAirport));
 
         StartCoroutine(StartAirportSpawns());
     }
 
     private IEnumerator StartAirportSpawns()
     {
-        airportsSpawnRate = DaytimeManager.kRealSecondsInDay * 5;
         yield return new WaitForSeconds(airportsSpawnRate);
-        airportsSpawnRate *= 0.92f;
+        airportsSpawnRate *= 0.97f;
         Airport airport;
         while ((airport = _airportManager.GetRandomAirport()) != null)
         {
-            if (_airportManager.UnlockAirport(airport))
-            {
-                var plane = _planeManager.AddPlane(true);
-                _uiManager.AddPlaneListItem(plane);
-            }
+            UnlockAirport(airport);
             airportsSpawnRate *= 0.92f;
             yield return new WaitForSeconds(airportsSpawnRate);
         }
     }
 
+    private void UnlockAirport(Airport airport)
+    {
+        if (_airportManager.UnlockAirport(airport))
+        {
+            var plane = _planeManager.AddPlane();
+            _uiManager.AddPlaneListItem(plane);
+        }
+    }
+
     private void Update()
+    {
+        foreach (var airport in _airportManager.ActiveAirports)
+        {
+            if (airport.PassengerCount > 1.33f)
+            {
+                GameOver();
+            }
+        }
+    }
+
+    private void GameOver()
     {
 
     }

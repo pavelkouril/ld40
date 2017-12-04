@@ -26,14 +26,24 @@ public class PlaneListItem : MonoBehaviour
         }
     }
 
+    public Button UpgradeButton
+    {
+        get
+        {
+            return _upgradeButton;
+        }
+    }
+
     [SerializeField]
     private Text _name;
 
     [SerializeField]
     private Button _flightPlanButton;
 
-    private Plane _plane;
+    [SerializeField]
+    private Button _upgradeButton;
 
+    private Plane _plane;
 
     private void Start()
     {

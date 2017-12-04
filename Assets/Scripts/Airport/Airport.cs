@@ -25,11 +25,11 @@ public class Airport
 
     public void BoardPassengers()
     {
-        PassengerCount *= Random.Range(0.66f, 0.95f);
+        PassengerCount *= Random.Range(0.7f, 0.95f);
     }
 
     public void SpawnPassengers()
     {
-        PassengerCount += Random.Range(0.07f, 0.25f);
+        PassengerCount += Random.Range(0.04f, 0.09f);
     }
 }

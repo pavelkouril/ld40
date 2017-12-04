@@ -34,12 +34,12 @@ public class DaytimeManager : MonoBehaviour
 
     public float Month { get; set; }
 
-    private ResourceManager _resourceManager;
+    private UpgradeManager _resourceManager;
     private GameloopManager _gameloopManager;
 
     private void Awake()
     {
-        _resourceManager = GetComponent<ResourceManager>();
+        _resourceManager = GetComponent<UpgradeManager>();
         _gameloopManager = GetComponent<GameloopManager>();
     }
 
