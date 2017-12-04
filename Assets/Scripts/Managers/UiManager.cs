@@ -42,6 +42,10 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject _pauseMenu;
 
+    [SerializeField]
+    private GameObject _gameOverMenu;
+
+
     #region Buttons
 
     [Header("Buttons")]
@@ -89,6 +93,14 @@ public class UiManager : MonoBehaviour
 
     #endregion
 
+    #region Gameover
+
+    [Header("Game over")]
+    [SerializeField]
+    private Text _gameOverScore;
+
+    #endregion
+
     #region FlightPlanPanel
 
     [Header("Flight plan panel")]
@@ -118,6 +130,7 @@ public class UiManager : MonoBehaviour
     private AirportManager _airportManager;
     private PlaneManager _planeManager;
     private UpgradeManager _upgradeManager;
+    private GameloopManager _gameloopManager;
 
     private Vector3 oldCameraPos;
     private Quaternion oldCameraRot;
@@ -147,6 +160,7 @@ public class UiManager : MonoBehaviour
 
     private void Awake()
     {
+        _gameloopManager = GetComponent<GameloopManager>();
         _daytimeManager = GetComponent<DaytimeManager>();
         _planeManager = GetComponent<PlaneManager>();
         _airportManager = GetComponent<AirportManager>();
@@ -177,12 +191,14 @@ public class UiManager : MonoBehaviour
         _textPanel.GetComponent<Image>().color = transparentDefault;
         _flightPlanPanel.GetComponent<Image>().color = transparentDefault;
         _pauseMenu.GetComponent<Image>().color = transparentDefault;
+        _gameOverMenu.GetComponent<Image>().color = transparentDefault;
 
         // hide all panels
         _textPanel.SetActive(false);
         _flightPlanPanel.SetActive(false);
         _pauseMenu.SetActive(false);
         _gameMenu.SetActive(true);
+        _gameOverMenu.SetActive(false);
 
         UpdateUpgrades();
     }
@@ -415,6 +431,21 @@ public class UiManager : MonoBehaviour
         _upgradesText.text = _upgradeManager.RemainingUpgrades + " Upgrades";
     }
 
+    public void Gameover()
+    {
+        _gameOverScore.text = ((int)_gameloopManager.Score).ToString();
+        LeanTween.alpha(_gameMenu.GetComponent<RectTransform>(), 0, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+        {
+            _selectAirportForPlan = false;
+            _lockAirportPanelOpen = false;
+            _gameOverMenu.SetActive(true);
+            _gameMenu.SetActive(false);
+            LeanTween.alpha(_gameOverMenu.GetComponent<RectTransform>(), _targetAlpha, kPanelFadeTime).setUseEstimatedTime(true).setOnComplete(() =>
+            {
+            });
+        });
+    }
+
     public void PauseGame()
     {
         _preserveAlphaPanel.color = _preserveColor;
@@ -451,7 +482,7 @@ public class UiManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("name", _inputField.text.Replace("|", " ").ToString());
-        form.AddField("score", (int)(_score));
+        form.AddField("score", (int)_gameloopManager.Score);
         _www = UnityWebRequest.Post("https://otte.cz/ld40/index.php", form);
         yield return _www.Send();
     }

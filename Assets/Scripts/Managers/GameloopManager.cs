@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class GameloopManager : MonoBehaviour
 {
+    private bool _gameOver;
+
+    public float Score { get; set; }
+
     private AirportManager _airportManager;
     private PlaneManager _planeManager;
     private UiManager _uiManager;
@@ -112,7 +116,7 @@ public class GameloopManager : MonoBehaviour
     {
         foreach (var airport in _airportManager.ActiveAirports)
         {
-            if (airport.PassengerCount > 1.33f)
+            if (airport.PassengerCount > 1.33f && !_gameOver)
             {
                 GameOver();
             }
@@ -121,7 +125,9 @@ public class GameloopManager : MonoBehaviour
 
     private void GameOver()
     {
-
+        _gameOver = true;
+        Score = _daytimeManager.TotalSeconds;
+        _uiManager.Gameover();
     }
 
     public void UnlockAirport()
