@@ -189,7 +189,7 @@ public class UiManager : MonoBehaviour
         if (_notifiedAirport != null)
         {
             _airportNotification.gameObject.SetActive(false);
-            // _cameraController.dosomething
+            _cameraController.GotoAirport(_notifiedAirport);
         }
     }
 

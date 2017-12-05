@@ -59,6 +59,13 @@ public class CameraController : MonoBehaviour
     public float _mouseXSensitivity = 0.2f;
     public float _mouseYSensitivity = 0.2f;
 
+    private bool _rotateToTarget = false;
+    private Vector3 _cameraDir;
+    private Vector3 _beaconDir;
+    private float _prevDot = 0.0f;
+    private float _prevDirX = 30.0f;
+    private float _prevDirY = 30.0f;
+
     public void Start()
     {
         angleX = transform.eulerAngles.y;
@@ -76,6 +83,19 @@ public class CameraController : MonoBehaviour
     {
         lockRotation = false;
         lockQuaternion = Quaternion.Inverse(center.transform.rotation) * lockQuaternion;
+    }
+
+    public void GotoAirport(Airport airport)
+    {
+        if (lockRotation)
+        {
+            Unlock();
+        }
+
+        _beaconDir = new Vector3(0.0f, 0.0f, 0.0f) - airport.Location.ToSphericalCartesian();
+        _beaconDir.Normalize();
+
+        _rotateToTarget = true;
     }
 
     private static float ClampAngle(ref float speed, float angle, float min, float max)
@@ -367,5 +387,68 @@ public class CameraController : MonoBehaviour
 
         _mouseX = Input.mousePosition.x;
         _mouseY = Input.mousePosition.y;
+
+        _cameraDir = new Vector3(0.0f, 0.0f, 0.0f) - transform.position;
+        _cameraDir.Normalize();
+        _cameraDir = Quaternion.Inverse(center.transform.rotation) * _cameraDir;
+
+        if (_rotateToTarget)
+        {
+            float dot = Vector3.Dot(_cameraDir, _beaconDir);
+
+            Vector3 t0 = new Vector3(_cameraDir.x, 0.0f, _cameraDir.z);
+            Vector3 t1 = new Vector3(_beaconDir.x, 0.0f, _beaconDir.z);
+            t0.Normalize();
+            t1.Normalize();
+            float dot2 = Vector3.Dot(t0, t1);
+            Vector3 n = Vector3.Cross(t0, t1);
+            float det = Vector3.Dot(new Vector3(0.0f, 1.0f, 0.0f), n);
+
+            if (_beaconDir.y > _cameraDir.y + 0.001f)
+            {
+                _prevDirY = -1.0f;
+            }
+            else if (_beaconDir.y < _cameraDir.y - 0.001f)
+            {
+                _prevDirY = 1.0f;
+            }
+            else
+            {
+                _prevDirY = 0.0f;
+            }
+
+            float angle = Mathf.Atan2(det, dot);
+
+            if (angle > 0.005f)
+            {
+                _prevDirX = 1.0f;
+            }
+            else if (angle < -0.005f)
+            {
+                _prevDirX = -1.0f;
+            }
+            else
+            {
+                _prevDirX = 0.0f;
+            }
+
+            if (dot > 0.999f)
+            {
+                _rotateToTarget = false;
+            }
+            else if (dot > 0.995f && dot == _prevDot)
+            {
+                _rotateToTarget = false;
+            }
+            else
+            {
+                angleX += _prevDirX * 30.0f * Time.deltaTime;
+                angleY += _prevDirY * 30.0f * Time.deltaTime;
+            }
+
+            _prevDot = dot;
+
+            Debug.Log(Vector3.Dot(_cameraDir, _beaconDir) + " " + angle);
+        }
     }
 }
