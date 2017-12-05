@@ -404,11 +404,11 @@ public class CameraController : MonoBehaviour
             Vector3 n = Vector3.Cross(t0, t1);
             float det = Vector3.Dot(new Vector3(0.0f, 1.0f, 0.0f), n);
 
-            if (_beaconDir.y > _cameraDir.y + 0.001f)
+            if (_beaconDir.y > _cameraDir.y + 0.005f)
             {
                 _prevDirY = -1.0f;
             }
-            else if (_beaconDir.y < _cameraDir.y - 0.001f)
+            else if (_beaconDir.y < _cameraDir.y - 0.005f)
             {
                 _prevDirY = 1.0f;
             }
