@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0012375731, g: 0.00097615324, b: 0.0009207994, a: 1}
+  m_IndirectSpecularColor: {r: 0.0012375717, g: 0.00097614806, b: 0.0009207984, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -88,6 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -5112,6 +5113,7 @@ GameObject:
   - component: {fileID: 1718258742}
   - component: {fileID: 1718258743}
   - component: {fileID: 1718258744}
+  - component: {fileID: 1718258745}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5401,6 +5403,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _source: {fileID: 823419201}
   _mouseClickClip: {fileID: 8300000, guid: 8d146f8624598c345b5de6316fa416cd, type: 3}
+--- !u!114 &1718258745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1718258735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a46722f8b9c4042910ae8b6c27e0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _volume: {fileID: 157860065}
 --- !u!1 &1729090843
 GameObject:
   m_ObjectHideFlags: 0

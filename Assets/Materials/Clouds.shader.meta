@@ -1,11 +1,21 @@
 fileFormatVersion: 2
 guid: 2098d727dadf7ba4eb647b9de36f5813
-timeCreated: 1512507527
+timeCreated: 1512844333
 licenseType: Free
 ShaderImporter:
   externalObjects: {}
   defaultTextures:
+  - _TextureSample5: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
   - _flowmap: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
+  - _TextureSample7: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+  - _TextureSample6: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
+  - _TextureSample11: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+  - _TextureSample8: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
+  - _TextureSample10: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+  - _TextureSample12: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+  - _TextureSample2: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
+  - _TextureSample4: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+  - _TextureSample3: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -60,4 +60,5 @@ Material:
     - _TessMin: 0
     - _TessValue: 10
     - __dirty: 0
-    m_Colors: []
+    m_Colors:
+    - _NightLights: {r: 1, g: 0.8570317, b: 0.604, a: 0}
