@@ -59,7 +59,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture0:
-        m_Texture: {fileID: 2800000, guid: 215edd18f749fde48b18e0a2c2450a58, type: 3}
+        m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _Texture1:
+        m_Texture: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
@@ -72,15 +76,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TextureSample10:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample11:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample12:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample13:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
@@ -100,11 +104,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TextureSample4:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample5:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample6:
         m_Texture: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
@@ -112,7 +116,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _TextureSample7:
         m_Texture: {fileID: 2800000, guid: 64a97dc5eeeda34449cb513958c8c583, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 4, y: 4}
         m_Offset: {x: 0, y: 0}
     - _TextureSample8:
         m_Texture: {fileID: 2800000, guid: 0215c3efc539cac489109d910ff3c977, type: 3}
